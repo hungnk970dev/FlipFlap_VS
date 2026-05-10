@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#fff1ea",
+                    "on-tertiary-fixed-variant": "#004b73",
+                    "primary-fixed-dim": "#ffb68a",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#321300",
+                    "on-secondary-container": "#656464",
+                    "tertiary-fixed": "#cce5ff",
+                    "surface-variant": "#f5ded2",
+                    "surface-container": "#ffeadf",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#743500",
+                    "on-background": "#251912",
+                    "secondary-container": "#e5e2e1",
+                    "on-secondary-fixed-variant": "#474646",
+                    "surface-container-highest": "#f5ded2",
+                    "tertiary": "#006397",
+                    "secondary": "#5f5e5e",
+                    "primary-fixed": "#ffdbc8",
+                    "surface-tint": "#994700",
+                    "on-surface": "#251912",
+                    "on-tertiary-container": "#003b5c",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#3b2d26",
+                    "outline-variant": "#e0c0af",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#e5e2e1",
+                    "primary-container": "#ff7b00",
+                    "surface": "#fff8f5",
+                    "background": "#fff8f5",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#fff8f5",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#fbe4d7",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#8c7263",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#5d2900",
+                    "primary": "#994700",
+                    "surface-dim": "#edd5ca",
+                    "inverse-primary": "#ffb68a",
+                    "tertiary-fixed-dim": "#92ccff",
+                    "tertiary-container": "#00a9fd",
+                    "on-tertiary-fixed": "#001d31",
+                    "on-surface-variant": "#584235",
+                    "inverse-on-surface": "#ffede5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "margin-desktop": "32px",
+                    "xl": "48px",
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "sm": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Montserrat"],
+                    "headline-lg": ["Montserrat"],
+                    "body-md": ["Montserrat"],
+                    "display-lg": ["Montserrat"],
+                    "body-lg": ["Montserrat"],
+                    "label-sm": ["Montserrat"],
+                    "label-lg": ["Montserrat"],
+                    "headline-lg-mobile": ["Montserrat"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.12);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 left-0 lg:left-64 right-0 z-30 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex items-center gap-md">
+<span class="lg:hidden material-symbols-outlined text-primary cursor-pointer">menu</span>
+<h1 class="font-display-lg text-headline-lg font-bold text-primary dark:text-primary-container">Flip Flash</h1>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex items-center gap-lg mr-lg">
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high transition-colors px-base py-xs rounded-xl active:scale-95 duration-150" href="#">Decks</a>
+<a class="font-label-lg text-label-lg text-primary border-b-2 border-primary px-base py-xs active:scale-95 duration-150" href="#">Recent</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high transition-colors px-base py-xs rounded-xl active:scale-95 duration-150" href="#">Community</a>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary p-xs hover:bg-surface-container-high rounded-full cursor-pointer transition-colors" data-icon="contrast">contrast</span>
+<span class="material-symbols-outlined text-primary p-xs hover:bg-surface-container-high rounded-full cursor-pointer transition-colors" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full z-40 w-64 hidden lg:flex flex-col p-md bg-surface dark:bg-surface-dim border-r border-outline-variant dark:border-outline h-screen">
+<div class="flex items-center gap-md mb-xl px-sm">
+<img alt="User Profile" class="w-12 h-12 rounded-full border-2 border-primary-container" data-alt="A clean, professional headshot of a young scholar smiling, set against a soft, out-of-focus academic background. The lighting is bright and warm, reflecting the energetic and encouraging 'Supportive Coach' brand identity. The overall color palette uses soft oranges and warm whites to create a welcoming and organized digital learning atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZrMHPil6bXNy3UWv22Ecx9S6TvuP-1bWxmZpNvgFMuZ4J5mVXMqO9BAndc-_jFJmA1z2RG2s6PaBguhTszZDTQcF-MJejLERJPkqR5hKQLS3pdWRu8rrzLS3EzpNDzQ8WCvYEhxkw26krzNwCZQNSNfioRKnYkDTUNOPcIHDBGzzMcWIJcu4lurJrvU85aekqCA_m_eoiIBVD3Y6KmSwEGi634paUb9URBhUTBJRfIpII8gCziMS9HVU8UDHYu4nrVJNf_WcJPoM"/>
+<div>
+<h3 class="font-headline-md text-body-md font-bold text-primary">Study Session</h3>
+<p class="text-label-sm text-on-surface-variant">Level 12 Scholar</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-xs">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-body-md">Home</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-body-md">My Decks</span>
+</a>
+<a class="flex items-center gap-md p-md bg-primary-container dark:bg-primary-fixed text-on-primary-container font-bold rounded-xl transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-body-md">Recent</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
+<span class="font-body-md">Achievements</span>
+</a>
+<button class="mt-lg w-full py-md px-lg bg-primary-container text-on-primary-container font-bold rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95">
+                Create New Deck
+            </button>
+</nav>
+<div class="mt-auto flex flex-col gap-xs pt-lg border-t border-outline-variant">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-body-md">Help</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pt-24 pb-24 lg:pb-base lg:pl-64 min-h-screen px-margin-mobile md:px-margin-desktop">
+<div class="max-w-5xl mx-auto py-lg">
+<header class="mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Your Recent Activity</h2>
+<p class="text-body-md text-on-surface-variant">Pick up exactly where you left off in your learning journey.</p>
+</header>
+<!-- Section: Today -->
+<section class="mb-xl">
+<div class="flex items-center gap-sm mb-lg">
+<span class="h-px flex-grow bg-outline-variant"></span>
+<h3 class="font-headline-md text-label-lg text-primary px-md uppercase tracking-wider">Today</h3>
+<span class="h-px flex-grow bg-outline-variant"></span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Recent Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col gap-md shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover-lift transition-all group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="menu_book" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<div>
+<h4 class="font-headline-md text-body-lg text-on-surface">Advanced Neuroscience</h4>
+<p class="text-label-sm text-secondary">2 hours ago • 142 cards</p>
+</div>
+</div>
+<span class="bg-surface-variant text-on-surface-variant text-[10px] font-bold px-sm py-xs rounded-full uppercase">Active</span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between text-label-sm text-on-surface-variant">
+<span>Mastery Progress</span>
+<span class="font-bold text-primary">68%</span>
+</div>
+<div class="w-full bg-secondary-container h-3 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500" style="width: 68%"></div>
+</div>
+</div>
+<div class="mt-base flex gap-md">
+<button class="flex-grow py-sm px-lg bg-primary-container text-on-primary-container font-bold rounded-xl flex items-center justify-center gap-xs hover:bg-surface-tint hover:text-white transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="play_arrow">play_arrow</span>
+                                Resume Session
+                            </button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Recent Item 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col gap-md shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover-lift transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-tertiary-container/20 rounded-xl flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="translate" style="font-variation-settings: 'FILL' 1;">translate</span>
+</div>
+<div>
+<h4 class="font-headline-md text-body-lg text-on-surface">Mandarin Business Phrases</h4>
+<p class="text-label-sm text-secondary">4 hours ago • 85 cards</p>
+</div>
+</div>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between text-label-sm text-on-surface-variant">
+<span>Mastery Progress</span>
+<span class="font-bold text-tertiary">42%</span>
+</div>
+<div class="w-full bg-secondary-container h-3 rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div class="mt-base flex gap-md">
+<button class="flex-grow py-sm px-lg bg-primary-container text-on-primary-container font-bold rounded-xl flex items-center justify-center gap-xs hover:bg-surface-tint hover:text-white transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="play_arrow">play_arrow</span>
+                                Resume Session
+                            </button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Yesterday -->
+<section class="mb-xl">
+<div class="flex items-center gap-sm mb-lg">
+<span class="h-px flex-grow bg-outline-variant"></span>
+<h3 class="font-headline-md text-label-lg text-primary px-md uppercase tracking-wider">Yesterday</h3>
+<span class="h-px flex-grow bg-outline-variant"></span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Card 3 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-md flex flex-col gap-sm shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg transition-all">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-error-container/20 rounded-lg flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="functions">functions</span>
+</div>
+<div class="overflow-hidden">
+<h4 class="font-bold text-on-surface truncate">Calculus II: Integrals</h4>
+<p class="text-[12px] text-secondary">Yesterday morning</p>
+</div>
+</div>
+<div class="mt-sm">
+<div class="w-full bg-secondary-container h-2 rounded-full">
+<div class="bg-primary-container h-full rounded-full" style="width: 89%"></div>
+</div>
+<p class="text-[11px] font-bold text-primary mt-1">89% Mastered</p>
+</div>
+<button class="w-full mt-sm py-xs bg-surface-container-high text-primary font-bold rounded-lg text-label-sm hover:bg-primary-container hover:text-white transition-all active:scale-95">
+                            Resume
+                        </button>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-md flex flex-col gap-sm shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg transition-all">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-primary-fixed-dim/30 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</div>
+<div class="overflow-hidden">
+<h4 class="font-bold text-on-surface truncate">Renaissance Art History</h4>
+<p class="text-[12px] text-secondary">Yesterday evening</p>
+</div>
+</div>
+<div class="mt-sm">
+<div class="w-full bg-secondary-container h-2 rounded-full">
+<div class="bg-primary-container h-full rounded-full" style="width: 25%"></div>
+</div>
+<p class="text-[11px] font-bold text-primary mt-1">25% Mastered</p>
+</div>
+<button class="w-full mt-sm py-xs bg-surface-container-high text-primary font-bold rounded-lg text-label-sm hover:bg-primary-container hover:text-white transition-all active:scale-95">
+                            Resume
+                        </button>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-md flex flex-col gap-sm shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg transition-all">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-on-tertiary-fixed-variant/10 rounded-lg flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="dna">genetics</span>
+</div>
+<div class="overflow-hidden">
+<h4 class="font-bold text-on-surface truncate">Genetics &amp; DNA</h4>
+<p class="text-[12px] text-secondary">Yesterday night</p>
+</div>
+</div>
+<div class="mt-sm">
+<div class="w-full bg-secondary-container h-2 rounded-full">
+<div class="bg-primary-container h-full rounded-full" style="width: 15%"></div>
+</div>
+<p class="text-[11px] font-bold text-primary mt-1">15% Mastered</p>
+</div>
+<button class="w-full mt-sm py-xs bg-surface-container-high text-primary font-bold rounded-lg text-label-sm hover:bg-primary-container hover:text-white transition-all active:scale-95">
+                            Resume
+                        </button>
+</div>
+</div>
+</section>
+<!-- Study Stats Bento Row -->
+<section class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="md:col-span-2 bg-primary text-on-primary p-lg rounded-xl flex items-center justify-between overflow-hidden relative">
+<div class="z-10">
+<h4 class="font-headline-md text-headline-md mb-xs">Keep the streak alive!</h4>
+<p class="text-body-md opacity-90 max-w-sm">You've studied 5 days in a row. Finish one more session today to reach your weekly goal.</p>
+<div class="mt-lg flex gap-md">
+<div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">M</div>
+<div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">T</div>
+<div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">W</div>
+<div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">T</div>
+<div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">F</div>
+<div class="w-10 h-10 rounded-full border-2 border-dashed border-white/40 flex items-center justify-center font-bold opacity-50 text-[10px]">S</div>
+<div class="w-10 h-10 rounded-full border-2 border-dashed border-white/40 flex items-center justify-center font-bold opacity-50 text-[10px]">S</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[160px] opacity-10 absolute -right-8 -bottom-8 pointer-events-none" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="bg-tertiary-container text-on-tertiary-container p-lg rounded-xl flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-[48px] mb-base" data-icon="emoji_events">emoji_events</span>
+<p class="text-label-lg font-bold">Mastery Achievement</p>
+<h5 class="font-headline-md text-headline-md">World History</h5>
+<p class="text-body-md opacity-80 mt-xs">100% completed</p>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar Shell (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 bg-surface-container/90 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-lg text-label-lg">Progress</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1">
+<span class="material-symbols-outlined" data-icon="shuffle">shuffle</span>
+<span class="font-label-lg text-label-lg">Shuffle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+<span class="font-label-lg text-label-lg">Back</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 mb-2 shadow-md Active: scale-90 transition-all duration-100 ease-out">
+<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
+<!-- Label hidden for active FAB state usually, but included in text for clarity -->
+</div>
+</nav>
+</body></html>
