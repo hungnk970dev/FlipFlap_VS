@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#994700",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#ffb68a",
+                        "secondary": "#5f5e5e",
+                        "on-background": "#251912",
+                        "on-secondary-fixed-variant": "#474646",
+                        "tertiary-fixed": "#cce5ff",
+                        "surface-container": "#ffeadf",
+                        "tertiary-fixed-dim": "#92ccff",
+                        "tertiary-container": "#00a9fd",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-container-highest": "#f5ded2",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#e0c0af",
+                        "on-primary": "#ffffff",
+                        "background": "#fff8f5",
+                        "on-surface-variant": "#584235",
+                        "on-tertiary-container": "#003b5c",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-primary-fixed-variant": "#743500",
+                        "surface-bright": "#fff8f5",
+                        "error": "#ba1a1a",
+                        "tertiary": "#006397",
+                        "on-surface": "#251912",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#004b73",
+                        "on-tertiary-fixed": "#001d31",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#fbe4d7",
+                        "primary-fixed": "#ffdbc8",
+                        "on-secondary-container": "#656464",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "primary": "#994700",
+                        "on-error": "#ffffff",
+                        "surface": "#fff8f5",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#8c7263",
+                        "primary-container": "#ff7b00",
+                        "secondary-container": "#e5e2e1",
+                        "surface-dim": "#edd5ca",
+                        "inverse-on-surface": "#ffede5",
+                        "surface-container-low": "#fff1ea",
+                        "surface-variant": "#f5ded2",
+                        "inverse-primary": "#ffb68a",
+                        "on-primary-fixed": "#321300",
+                        "on-primary-container": "#5d2900",
+                        "inverse-surface": "#3b2d26"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "base": "8px",
+                        "xl": "48px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "display-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-sm": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col p-md h-screen w-64 hidden lg:flex border-r border-outline-variant bg-surface">
+<div class="mb-xl px-2">
+<span class="text-headline-md font-headline-md text-primary">Flip Flash</span>
+</div>
+<div class="mb-lg px-2 flex flex-col">
+<div class="flex items-center gap-sm mb-xs">
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxgwOIiVSlzE3FHFRaAQFMml4KCeC-uzYOKemEuuln9zvPIcZs-RN2dQSVDVVnoNsNd8GbTi76EnEfw95xEPQxfMNmqocOgxrgyx9PmD6gzC9jkpV4QM1ybFG9qhAoZ9M_sdtDUeSunVkQbGNxozPGbwuyFKw0VnQovPs4Ra27r6udDt_EnALb-i3Xpqdhzby06HSEiUub4hHXoLLmyP7wK8n3bOOT7ms5qqI9os_yhG2_GHx5VlEXMSYSpSCdvsHGijsFy4woymU"/>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-black uppercase tracking-wider leading-none">Study Session</span>
+<span class="text-label-sm text-on-surface-variant">Level 12 Scholar</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-base">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all active:translate-x-1 duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all active:translate-x-1 duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span>My Decks</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all active:translate-x-1 duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>Recent</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all active:translate-x-1 duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
+<span>Achievements</span>
+</a>
+</nav>
+<div class="mt-auto pt-lg border-t border-outline-variant space-y-base">
+<button class="w-full bg-primary-container text-on-primary-container font-bold py-md px-lg rounded-xl shadow-md hover:brightness-110 transition-all mb-lg">
+                Create New Deck
+            </button>
+<a class="flex items-center gap-md p-md bg-primary-container text-on-primary-container font-bold rounded-xl active:translate-x-1 duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all active:translate-x-1 duration-200 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="lg:ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-30 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base bg-surface-container-lowest border-b border-outline-variant shadow-sm h-16">
+<div class="flex items-center gap-md">
+<button class="lg:hidden p-sm hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary">Manage Account</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="contrast">contrast</span>
+</button>
+<button class="p-sm hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop max-w-5xl mx-auto w-full pb-32">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Profile Hero Section (Bento Style) -->
+<section class="md:col-span-12 bg-surface-container-lowest rounded-xl p-lg border border-outline-variant flex flex-col md:flex-row items-center gap-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
+<div class="relative group">
+<img class="w-32 h-32 rounded-full border-4 border-primary-container object-cover shadow-lg transition-transform group-hover:scale-105" data-alt="A close-up portrait of a friendly-looking academic student in a bright, high-key studio setting. The lighting is soft and even, highlighting a warm orange background that matches the brand's primary color. The student is wearing a clean white polo shirt, conveying a sense of organized professionalism. The overall mood is supportive, encouraging, and vibrant, with a crisp, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe93in-WH-LFn0ztc_8szEV-IPcU23WP_HwGirvOAi-8Nivu5TuOwjAjPpBCO5yoxPd7HAJlOU4Je0W30YSZPVEie3H-EzlXljVcRrelUFjWPzZMsX2ALzyLCoO-cnKd_G2TPX_soSCzHWiYsnWLOV2i624FUYNYf9Kuj_Y8KjADmof8mhhOjwhk__A_KLW10Fq80-K6ssDbTFqokAEqYJJyou43THEieYHfiArWzjVmFHCdLA9YbRkcbECh8PfM17s3nsd2S5_J4"/>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary p-2 rounded-full shadow-lg hover:scale-110 transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="text-center md:text-left flex-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Level 12 Scholar</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Dedicated student since September 2023</p>
+<button class="font-label-lg text-label-lg bg-primary-container text-on-primary-container px-lg py-sm rounded-xl hover:brightness-105 transition-all">
+                            Change Avatar
+                        </button>
+</div>
+<div class="hidden md:flex flex-col items-center p-lg bg-surface-variant rounded-xl border border-outline-variant">
+<span class="text-headline-md font-bold text-primary">1,240</span>
+<span class="text-label-sm uppercase font-bold text-on-surface-variant">Cards Mastered</span>
+</div>
+</section>
+<!-- Personal Information -->
+<section class="md:col-span-8 bg-surface-container-lowest rounded-xl p-lg border border-outline-variant shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+<h3 class="font-headline-md text-headline-md">Personal Information</h3>
+</div>
+<div class="space-y-lg">
+<div class="grid grid-cols-1 gap-base">
+<label class="font-label-lg text-label-lg text-on-surface-variant">Full Name</label>
+<input class="w-full rounded-lg border-outline-variant focus:ring-primary focus:border-primary bg-surface p-md font-body-md" type="text" value="Alex Rivera"/>
+</div>
+<div class="grid grid-cols-1 gap-base">
+<label class="font-label-lg text-label-lg text-on-surface-variant">Email Address</label>
+<input class="w-full rounded-lg border-outline-variant focus:ring-primary focus:border-primary bg-surface p-md font-body-md" type="email" value="alex.rivera@scholar.edu"/>
+</div>
+<div class="grid grid-cols-1 gap-base">
+<label class="font-label-lg text-label-lg text-on-surface-variant">Username</label>
+<div class="flex">
+<span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-outline-variant bg-surface-variant text-on-surface-variant font-body-md">@</span>
+<input class="w-full rounded-r-lg border-outline-variant focus:ring-primary focus:border-primary bg-surface p-md font-body-md" type="text" value="scholar_alex12"/>
+</div>
+</div>
+<div class="pt-md flex justify-end">
+<button class="font-label-lg text-label-lg bg-primary-container text-on-primary-container px-xl py-md rounded-xl hover:brightness-105 transition-all shadow-md">
+                                Save Changes
+                            </button>
+</div>
+</div>
+</section>
+<!-- Security Settings -->
+<section class="md:col-span-4 space-y-lg">
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-outline-variant shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-primary" data-icon="shield">shield</span>
+<h3 class="font-headline-md text-headline-md">Security</h3>
+</div>
+<div class="space-y-lg">
+<button class="w-full flex items-center justify-between p-md rounded-xl border border-outline-variant hover:bg-surface-variant transition-colors font-label-lg text-label-lg text-on-surface">
+<span>Change Password</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="flex items-center justify-between p-md rounded-xl bg-surface-variant/50">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg">2FA</span>
+<span class="text-label-sm text-on-surface-variant">Two-Factor Auth</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-secondary-fixed rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- App Preferences -->
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-outline-variant shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-primary" data-icon="tune">tune</span>
+<h3 class="font-headline-md text-headline-md">Preferences</h3>
+</div>
+<div class="space-y-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant">Language</label>
+<select class="w-full rounded-lg border-outline-variant focus:ring-primary focus:border-primary bg-surface p-md font-body-md">
+<option>English (US)</option>
+<option>Spanish</option>
+<option>French</option>
+</select>
+</div>
+<div class="flex items-center justify-between pt-md">
+<span class="font-label-lg text-label-lg">Email Alerts</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-secondary-fixed rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Danger Zone -->
+<section class="md:col-span-12 bg-error-container/30 rounded-xl p-lg border border-error/20">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-error" data-icon="report">report</span>
+<h3 class="font-headline-md text-headline-md text-error">Danger Zone</h3>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-lg">
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface mb-xs">Warning: These actions are permanent and cannot be undone.</p>
+<p class="text-label-sm text-on-surface-variant">Deleting your account will remove all your decks, progress, and achievement history.</p>
+</div>
+<div class="flex gap-md w-full md:w-auto">
+<button class="flex-1 md:flex-none font-label-lg text-label-lg border border-error text-error px-lg py-md rounded-xl hover:bg-error hover:text-white transition-all">
+                                Log Out
+                            </button>
+<button class="flex-1 md:flex-none font-label-lg text-label-lg bg-error text-on-error px-lg py-md rounded-xl hover:brightness-110 transition-all shadow-sm">
+                                Delete Account
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 bg-surface-container/90 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-transform hover:-translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Progress</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-transform hover:-translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="shuffle">shuffle</span>
+<span>Shuffle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-transform hover:-translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+<span>Back</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 mb-2 shadow-md active:scale-90 transition-all duration-100 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+</a>
+</nav>
+</body></html>
