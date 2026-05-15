@@ -1579,6 +1579,7 @@ async function initCardsPage() {
   }
 
   await loadCardsAndRender(setId);
+
   bindImageUploadPreview();
 
   const form = document.getElementById("createCardForm");
@@ -1587,136 +1588,39 @@ async function initCardsPage() {
     form.dataset.bound = "true";
 
     form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+      e.preventDefault();
 
-    const question = document.getElementById("cardQuestion")?.value?.trim();
-    const answer = document.getElementById("cardAnswer")?.value?.trim();
-    const difficulty = Number(document.getElementById("cardDifficulty")?.value || 1);
+      const question = document.getElementById("cardQuestion")?.value?.trim();
+      const answer = document.getElementById("cardAnswer")?.value?.trim();
+      const difficulty = Number(document.getElementById("cardDifficulty")?.value || 1);
 
-    if (!question) {
-        showToast("Please enter a question.", "error");
+      if (!question) {
+        showToast("Vui lòng nhập câu hỏi.", "error");
         return;
-    }
+      }
 
-    if (!answer) {
-        showToast("Please enter an answer.", "error");
+      if (!answer) {
+        showToast("Vui lòng nhập câu trả lời.", "error");
         return;
-    }
+      }
 
-    try {
+      try {
         const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
         let imageUrl = null;
 
         if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-        if (imageFile) {
-        showToast("Please enter an answer.", "error");
-        return;
-    }
-
-    try {
-        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
-        let imageUrl = null;
-
-=======
-
-    if (!answer) {
-        showToast("Please enter an answer.", "error");
-=======
-
-    if (!answer) {
-=======
-
-    if (!answer) {
+          showToast("Đang tải ảnh lên...", "info");
+          imageUrl = await uploadCardImage(imageFile);
         }
 
         await createCard({
-        deckId,
-        folderId,
-        setId,
-        question,
-        answer,
-        image_url: imageUrl,
-        difficulty_level: difficulty,
+          deckId,
+          folderId,
+          setId,
+          question,
+          answer,
+          image_url: imageUrl,
+          difficulty_level: difficulty,
         });
 
         showToast("Đã thêm card.", "success");
@@ -1725,16 +1629,16 @@ async function initCardsPage() {
 
         const preview = document.getElementById("cardImagePreview");
         if (preview) {
-        preview.src = "";
-        preview.classList.add("hidden");
+          preview.src = "";
+          preview.classList.add("hidden");
         }
 
         closeModal("createCardModal");
 
         await loadCardsAndRender(setId);
-    } catch (err) {
+      } catch (err) {
         showToast(err.message, "error");
-    }
+      }
     });
   }
 
