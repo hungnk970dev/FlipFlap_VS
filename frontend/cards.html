@@ -193,8 +193,26 @@
         </div>
 
         <div class="ff-field">
-          <label>Image URL</label>
-          <input id="cardImageUrl" type="url" placeholder="Optional"/>
+        <label>Image / Hint</label>
+
+        <label
+        for="cardImageFile"
+        class="ff-upload-box">
+        <span class="material-symbols-outlined">add_photo_alternate</span>
+        <strong>Upload image from your device</strong>
+        <small>PNG, JPG, WebP · Max 5MB</small>
+        </label>
+
+        <input
+        id="cardImageFile"
+        type="file"
+        accept="image/*"
+        class="hidden"/>
+
+        <img
+        id="cardImagePreview"
+        class="ff-upload-preview hidden"
+        alt="Image preview"/>
         </div>
 
         <div class="ff-field">

@@ -269,6 +269,82 @@
     </div>
   </div>
 
+  <div id="editFolderModal" class="ff-modal hidden">
+  <div class="ff-modal-panel">
+    <div class="ff-modal-head">
+      <div>
+        <h3>Edit Folder</h3>
+        <p>Update folder name and description.</p>
+      </div>
+
+      <button class="ff-icon-btn" data-modal-close="editFolderModal" type="button">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <form id="editFolderForm">
+      <input id="editFolderId" type="hidden"/>
+
+      <div class="ff-field">
+        <label>Folder Name</label>
+        <input id="editFolderName" type="text" required/>
+      </div>
+
+      <div class="ff-field">
+        <label>Description</label>
+        <textarea id="editFolderDesc"></textarea>
+      </div>
+
+      <div class="ff-actions">
+        <button type="button" data-modal-close="editFolderModal" class="ff-btn ff-btn-soft">
+          Cancel
+        </button>
+        <button type="submit" class="ff-btn ff-btn-primary">
+          Save Folder
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="editSetModal" class="ff-modal hidden">
+  <div class="ff-modal-panel">
+    <div class="ff-modal-head">
+      <div>
+        <h3>Edit Set</h3>
+        <p>Update set name and description.</p>
+      </div>
+
+      <button class="ff-icon-btn" data-modal-close="editSetModal" type="button">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <form id="editSetForm">
+      <input id="editSetId" type="hidden"/>
+
+      <div class="ff-field">
+        <label>Set Name</label>
+        <input id="editSetName" type="text" required/>
+      </div>
+
+      <div class="ff-field">
+        <label>Description</label>
+        <textarea id="editSetDesc"></textarea>
+      </div>
+
+      <div class="ff-actions">
+        <button type="button" data-modal-close="editSetModal" class="ff-btn ff-btn-soft">
+          Cancel
+        </button>
+        <button type="submit" class="ff-btn ff-btn-primary">
+          Save Set
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./js/supabase-config.js"></script>
   <script src="./js/app-supabase.js"></script>

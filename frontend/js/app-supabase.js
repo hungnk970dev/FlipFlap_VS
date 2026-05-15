@@ -342,6 +342,9 @@ function bindCommonEvents() {
         showToast(err.message, "error");
       }
     });
+
+
+    
   }
 
   const logoutBtn = document.getElementById("logoutBtn");
@@ -528,6 +531,96 @@ async function updateCard(cardId, payload) {
 async function deleteCard(cardId) {
   return api("deleteCard", {
     cardId,
+  });
+}
+
+async function updateFolder(folderId, payload) {
+  return api("updateFolder", {
+    folderId,
+    ...payload,
+  });
+}
+
+async function deleteFolder(folderId) {
+  return api("deleteFolder", {
+    folderId,
+  });
+}
+
+async function updateSet(setId, payload) {
+  return api("updateSet", {
+    setId,
+    ...payload,
+  });
+}
+
+async function deleteSet(setId) {
+  return api("deleteSet", {
+    setId,
+  });
+}
+
+async function uploadCardImage(file) {
+  if (!file) return null;
+
+  const maxSize = 5 * 1024 * 1024;
+
+  if (file.size > maxSize) {
+    throw new Error("Ảnh quá lớn. Vui lòng chọn ảnh dưới 5MB.");
+  }
+
+  const base64 = await fileToBase64(file);
+
+  const result = await api("uploadCardImage", {
+    fileName: file.name,
+    contentType: file.type || "image/png",
+    base64,
+  });
+
+  return result.url;
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const result = String(reader.result || "");
+      const base64 = result.split(",")[1];
+
+      if (!base64) {
+        reject(new Error("Không đọc được file ảnh."));
+        return;
+      }
+
+      resolve(base64);
+    };
+
+    reader.onerror = () => reject(new Error("Không đọc được file ảnh."));
+    reader.readAsDataURL(file);
+  });
+}
+
+function bindImageUploadPreview() {
+  const input = document.getElementById("cardImageFile");
+  const preview = document.getElementById("cardImagePreview");
+
+  if (!input || !preview) return;
+  if (input.dataset.bound === "true") return;
+
+  input.dataset.bound = "true";
+
+  input.addEventListener("change", () => {
+    const file = input.files?.[0];
+
+    if (!file) {
+      preview.src = "";
+      preview.classList.add("hidden");
+      return;
+    }
+
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove("hidden");
   });
 }
 
@@ -1003,6 +1096,72 @@ async function initDeckDetails() {
       }
     });
   }
+
+  const editFolderForm = document.getElementById("editFolderForm");
+
+if (editFolderForm && editFolderForm.dataset.bound !== "true") {
+  editFolderForm.dataset.bound = "true";
+
+  editFolderForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const folderId = document.getElementById("editFolderId")?.value;
+    const name = document.getElementById("editFolderName")?.value?.trim();
+    const description = document.getElementById("editFolderDesc")?.value?.trim() || "";
+
+    if (!folderId || !name) {
+      showToast("Thiếu thông tin folder.", "error");
+      return;
+    }
+
+    try {
+      await updateFolder(folderId, {
+        name,
+        description,
+      });
+
+      closeModal("editFolderModal");
+      showToast("Đã cập nhật folder.", "success");
+
+      await loadDeckBundleAndRender(deckId);
+    } catch (err) {
+      showToast(err.message, "error");
+    }
+  });
+}
+
+const editSetForm = document.getElementById("editSetForm");
+
+if (editSetForm && editSetForm.dataset.bound !== "true") {
+  editSetForm.dataset.bound = "true";
+
+  editSetForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const setId = document.getElementById("editSetId")?.value;
+    const name = document.getElementById("editSetName")?.value?.trim();
+    const description = document.getElementById("editSetDesc")?.value?.trim() || "";
+
+    if (!setId || !name) {
+      showToast("Thiếu thông tin set.", "error");
+      return;
+    }
+
+    try {
+      await updateSet(setId, {
+        name,
+        description,
+      });
+
+      closeModal("editSetModal");
+      showToast("Đã cập nhật set.", "success");
+
+      await loadDeckBundleAndRender(deckId);
+    } catch (err) {
+      showToast(err.message, "error");
+    }
+  });
+}
 }
 
 async function loadDeckBundleAndRender(deckId) {
@@ -1058,10 +1217,13 @@ function renderFoldersAndSets(deck, folders, sets) {
         <h3 style="margin:0 0 8px;font-size:24px;font-weight:800;">
           Deck này chưa có folder
         </h3>
+
         <p style="margin:0 0 18px;color:var(--on-surface-variant);">
           Tạo folder trước, sau đó tạo set trong folder.
         </p>
+
         <button
+          type="button"
           data-modal-open="createFolderModal"
           class="ff-btn ff-btn-primary">
           Create Folder
@@ -1078,36 +1240,59 @@ function renderFoldersAndSets(deck, folders, sets) {
 
   folders.forEach((folder, folderIndex) => {
     const folderSets = sets.filter((set) => set.folder_id === folder.id);
+    const isFirst = folderIndex === 0;
 
     const section = document.createElement("section");
     section.className = "ff-card ff-folder-card";
-
-    const isFirst = folderIndex === 0;
 
     section.innerHTML = `
       <button
         type="button"
         class="ff-folder-header"
         data-toggle-folder="${folder.id}">
-        <div>
-          <div class="ff-folder-title-wrap">
-            <span class="material-symbols-outlined">folder</span>
-            <div>
-              <h3 class="ff-folder-title">
-                ${safeText(folder.name)}
-              </h3>
-              <p class="ff-folder-sub">
-                ${safeText(folder.description || "")}
-              </p>
-            </div>
+
+        <div class="ff-folder-title-wrap">
+          <span class="material-symbols-outlined">folder</span>
+
+          <div>
+            <h3 class="ff-folder-title">
+              ${safeText(folder.name)}
+            </h3>
+
+            <p class="ff-folder-sub">
+              ${safeText(folder.description || "")}
+            </p>
           </div>
         </div>
 
-        <div style="display:flex;align-items:center;gap:14px;">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
           <span style="color:var(--on-surface-variant);font-weight:800;">
             ${folder.set_count || 0} sets · ${folder.card_count || 0} cards
           </span>
-          <span class="material-symbols-outlined" data-folder-chevron="${folder.id}">
+
+          <div class="ff-folder-actions">
+            <button
+              type="button"
+              data-edit-folder="${folder.id}"
+              data-folder-name="${safeText(folder.name)}"
+              data-folder-desc="${safeText(folder.description || "")}"
+              title="Edit folder">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+
+            <button
+              type="button"
+              class="danger"
+              data-delete-folder="${folder.id}"
+              data-folder-name="${safeText(folder.name)}"
+              title="Delete folder">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </div>
+
+          <span
+            class="material-symbols-outlined"
+            data-folder-chevron="${folder.id}">
             ${isFirst ? "expand_less" : "expand_more"}
           </span>
         </div>
@@ -1116,6 +1301,7 @@ function renderFoldersAndSets(deck, folders, sets) {
       <div
         class="ff-folder-body ${isFirst ? "" : "is-collapsed"}"
         data-folder-body="${folder.id}">
+
         ${
           folderSets.length
             ? `
@@ -1127,6 +1313,7 @@ function renderFoldersAndSets(deck, folders, sets) {
                         class="ff-set-card"
                         data-open-set="${set.id}"
                         data-folder-id="${folder.id}">
+
                         <h4 class="ff-set-title">
                           <span class="material-symbols-outlined">
                             ${safeText(set.icon || "style")}
@@ -1158,6 +1345,23 @@ function renderFoldersAndSets(deck, folders, sets) {
                             data-study-set="${set.id}">
                             Study
                           </button>
+
+                          <button
+                            type="button"
+                            class="ff-btn ff-btn-soft"
+                            data-edit-set="${set.id}"
+                            data-set-name="${safeText(set.name)}"
+                            data-set-desc="${safeText(set.description || "")}">
+                            Edit
+                          </button>
+
+                          <button
+                            type="button"
+                            class="ff-btn ff-btn-danger"
+                            data-delete-set="${set.id}"
+                            data-set-name="${safeText(set.name)}">
+                            Delete
+                          </button>
                         </div>
                       </article>
                     `
@@ -1179,6 +1383,7 @@ function renderFoldersAndSets(deck, folders, sets) {
     container.appendChild(section);
   });
 
+  // Toggle folder expand / collapse
   document.querySelectorAll("[data-toggle-folder]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const folderId = btn.dataset.toggleFolder;
@@ -1197,6 +1402,7 @@ function renderFoldersAndSets(deck, folders, sets) {
     });
   });
 
+  // Click whole set card to open cards page
   document.querySelectorAll("[data-open-set]").forEach((card) => {
     card.addEventListener("click", (e) => {
       if (e.target.closest("button")) return;
@@ -1208,6 +1414,7 @@ function renderFoldersAndSets(deck, folders, sets) {
     });
   });
 
+  // Open cards button
   document.querySelectorAll("[data-open-cards]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -1219,11 +1426,102 @@ function renderFoldersAndSets(deck, folders, sets) {
     });
   });
 
+  // Study set button
   document.querySelectorAll("[data-study-set]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
 
       window.location.href = `study-session.html?deckId=${deck.id}&setId=${btn.dataset.studySet}`;
+    });
+  });
+
+  // Edit folder
+  document.querySelectorAll("[data-edit-folder]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const idInput = document.getElementById("editFolderId");
+      const nameInput = document.getElementById("editFolderName");
+      const descInput = document.getElementById("editFolderDesc");
+
+      if (!idInput || !nameInput || !descInput) {
+        showToast("Thiếu editFolderModal trong deck-details.html.", "error");
+        return;
+      }
+
+      idInput.value = btn.dataset.editFolder;
+      nameInput.value = btn.dataset.folderName || "";
+      descInput.value = btn.dataset.folderDesc || "";
+
+      openModal("editFolderModal");
+    });
+  });
+
+  // Delete folder
+  document.querySelectorAll("[data-delete-folder]").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      const ok = confirm(
+        `Xóa folder "${btn.dataset.folderName}"? Toàn bộ sets và cards bên trong cũng sẽ bị xóa.`
+      );
+
+      if (!ok) return;
+
+      try {
+        await deleteFolder(btn.dataset.deleteFolder);
+
+        showToast("Đã xóa folder.", "success");
+
+        await loadDeckBundleAndRender(deck.id);
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    });
+  });
+
+  // Edit set
+  document.querySelectorAll("[data-edit-set]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const idInput = document.getElementById("editSetId");
+      const nameInput = document.getElementById("editSetName");
+      const descInput = document.getElementById("editSetDesc");
+
+      if (!idInput || !nameInput || !descInput) {
+        showToast("Thiếu editSetModal trong deck-details.html.", "error");
+        return;
+      }
+
+      idInput.value = btn.dataset.editSet;
+      nameInput.value = btn.dataset.setName || "";
+      descInput.value = btn.dataset.setDesc || "";
+
+      openModal("editSetModal");
+    });
+  });
+
+  // Delete set
+  document.querySelectorAll("[data-delete-set]").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      const ok = confirm(
+        `Xóa set "${btn.dataset.setName}"? Toàn bộ cards trong set này cũng sẽ bị xóa.`
+      );
+
+      if (!ok) return;
+
+      try {
+        await deleteSet(btn.dataset.deleteSet);
+
+        showToast("Đã xóa set.", "success");
+
+        await loadDeckBundleAndRender(deck.id);
+      } catch (err) {
+        showToast(err.message, "error");
+      }
     });
   });
 }
@@ -1244,6 +1542,7 @@ async function initCardsPage() {
   }
 
   await loadCardsAndRender(setId);
+  bindImageUploadPreview();
 
   const form = document.getElementById("createCardForm");
 
@@ -1251,43 +1550,57 @@ async function initCardsPage() {
     form.dataset.bound = "true";
 
     form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const question = document.getElementById("cardQuestion")?.value?.trim();
-      const answer = document.getElementById("cardAnswer")?.value?.trim();
-      const imageUrl = document.getElementById("cardImageUrl")?.value?.trim() || null;
-      const difficulty = Number(document.getElementById("cardDifficulty")?.value || 1);
+    const question = document.getElementById("cardQuestion")?.value?.trim();
+    const answer = document.getElementById("cardAnswer")?.value?.trim();
+    const difficulty = Number(document.getElementById("cardDifficulty")?.value || 1);
 
-      if (!question) {
+    if (!question) {
         showToast("Vui lòng nhập câu hỏi.", "error");
         return;
-      }
+    }
 
-      if (!answer) {
+    if (!answer) {
         showToast("Vui lòng nhập câu trả lời.", "error");
         return;
-      }
+    }
 
-      try {
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Đang tải ảnh lên...", "info");
+        imageUrl = await uploadCardImage(imageFile);
+        }
+
         await createCard({
-          deckId,
-          folderId,
-          setId,
-          question,
-          answer,
-          image_url: imageUrl,
-          difficulty_level: difficulty,
+        deckId,
+        folderId,
+        setId,
+        question,
+        answer,
+        image_url: imageUrl,
+        difficulty_level: difficulty,
         });
 
         showToast("Đã thêm card.", "success");
 
         form.reset();
+
+        const preview = document.getElementById("cardImagePreview");
+        if (preview) {
+        preview.src = "";
+        preview.classList.add("hidden");
+        }
+
         closeModal("createCardModal");
 
         await loadCardsAndRender(setId);
-      } catch (err) {
+    } catch (err) {
         showToast(err.message, "error");
-      }
+    }
     });
   }
 
@@ -1652,13 +1965,17 @@ function renderCurrentStudyCard() {
             <p class="ff-study-label">Question</p>
 
             ${
-              card.image_url
-                ? `<img
-                    src="${safeText(card.image_url)}"
-                    alt="Study image"
-                    style="max-height:220px;max-width:100%;border-radius:18px;margin-bottom:24px;">`
-                : ""
-            }
+                card.image_url
+                    ? `
+                    <div class="ff-study-image-wrap">
+                        <img
+                        src="${safeText(card.image_url)}"
+                        alt="Question hint image"
+                        class="ff-study-image">
+                    </div>
+                    `
+                    : ""
+                }
 
             <p class="ff-study-text">
               ${safeText(card.question)}

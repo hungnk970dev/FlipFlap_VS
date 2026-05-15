@@ -721,6 +721,198 @@ Deno.serve(async (req) => {
       return json({ achievements });
     }
 
+    // ========================================================
+    // FOLDER UPDATE / DELETE
+    // ========================================================
+
+    if (action === "updateFolder") {
+    const { folderId, name, description, color, icon } = body;
+
+    if (!folderId) {
+        return json({ error: "folderId is required" }, 400);
+    }
+
+    const patch: Record<string, unknown> = {
+        updated_at: new Date().toISOString(),
+    };
+
+    if (name !== undefined) patch.name = String(name).trim();
+    if (description !== undefined) patch.description = description || "";
+    if (color !== undefined) patch.color = color || "#994700";
+    if (icon !== undefined) patch.icon = icon || "folder";
+
+    const { data, error } = await supabaseAdmin
+        .from("folders")
+        .update(patch)
+        .eq("id", folderId)
+        .eq("user_id", userId)
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    await refreshDeckCounts(supabaseAdmin, userId, data.deck_id);
+
+    return json({ folder: data });
+    }
+
+    if (action === "deleteFolder") {
+    const { folderId } = body;
+
+    if (!folderId) {
+        return json({ error: "folderId is required" }, 400);
+    }
+
+    const { data: folder, error: folderError } = await supabaseAdmin
+        .from("folders")
+        .select("*")
+        .eq("id", folderId)
+        .eq("user_id", userId)
+        .single();
+
+    if (folderError) throw folderError;
+
+    await supabaseAdmin
+        .from("cards")
+        .delete()
+        .eq("folder_id", folderId)
+        .eq("user_id", userId);
+
+    await supabaseAdmin
+        .from("sets")
+        .delete()
+        .eq("folder_id", folderId)
+        .eq("user_id", userId);
+
+    const { error } = await supabaseAdmin
+        .from("folders")
+        .delete()
+        .eq("id", folderId)
+        .eq("user_id", userId);
+
+    if (error) throw error;
+
+    await refreshDeckCounts(supabaseAdmin, userId, folder.deck_id);
+    await syncAchievements(supabaseAdmin, userId);
+
+    return json({ message: "Folder deleted" });
+    }
+
+    // ========================================================
+    // SET UPDATE / DELETE
+    // ========================================================
+
+    if (action === "updateSet") {
+    const { setId, name, description, color, icon } = body;
+
+    if (!setId) {
+        return json({ error: "setId is required" }, 400);
+    }
+
+    const patch: Record<string, unknown> = {
+        updated_at: new Date().toISOString(),
+    };
+
+    if (name !== undefined) patch.name = String(name).trim();
+    if (description !== undefined) patch.description = description || "";
+    if (color !== undefined) patch.color = color || "#994700";
+    if (icon !== undefined) patch.icon = icon || "style";
+
+    const { data, error } = await supabaseAdmin
+        .from("sets")
+        .update(patch)
+        .eq("id", setId)
+        .eq("user_id", userId)
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    await refreshDeckCounts(supabaseAdmin, userId, data.deck_id);
+    await refreshFolderCounts(supabaseAdmin, userId, data.folder_id);
+
+    return json({ set: data });
+    }
+
+    if (action === "deleteSet") {
+    const { setId } = body;
+
+    if (!setId) {
+        return json({ error: "setId is required" }, 400);
+    }
+
+    const { data: set, error: setError } = await supabaseAdmin
+        .from("sets")
+        .select("*")
+        .eq("id", setId)
+        .eq("user_id", userId)
+        .single();
+
+    if (setError) throw setError;
+
+    await supabaseAdmin
+        .from("cards")
+        .delete()
+        .eq("set_id", setId)
+        .eq("user_id", userId);
+
+    const { error } = await supabaseAdmin
+        .from("sets")
+        .delete()
+        .eq("id", setId)
+        .eq("user_id", userId);
+
+    if (error) throw error;
+
+    await refreshDeckCounts(supabaseAdmin, userId, set.deck_id);
+    await refreshFolderCounts(supabaseAdmin, userId, set.folder_id);
+    await syncAchievements(supabaseAdmin, userId);
+
+    return json({ message: "Set deleted" });
+    }
+
+    // ========================================================
+    // CARD IMAGE UPLOAD
+    // ========================================================
+
+    if (action === "uploadCardImage") {
+    const { fileName, contentType, base64 } = body;
+
+    if (!base64) {
+        return json({ error: "base64 image is required" }, 400);
+    }
+
+    const bucket = "card-images";
+
+    const cleanName = String(fileName || "card-image")
+        .replace(/[^a-zA-Z0-9._-]/g, "-")
+        .slice(0, 80);
+
+    const ext = cleanName.includes(".")
+        ? cleanName.split(".").pop()
+        : "png";
+
+    const path = `${userId}/${crypto.randomUUID()}.${ext}`;
+
+    const binary = Uint8Array.from(atob(base64), (char) => char.charCodeAt(0));
+
+    const { error: uploadError } = await supabaseAdmin.storage
+        .from(bucket)
+        .upload(path, binary, {
+        contentType: contentType || "image/png",
+        upsert: false,
+        });
+
+    if (uploadError) throw uploadError;
+
+    const { data } = supabaseAdmin.storage.from(bucket).getPublicUrl(path);
+
+    return json({
+        path,
+        url: data.publicUrl,
+    });
+    }
+
     return json({ error: `Unknown action: ${action}` }, 400);
   } catch (error) {
     console.error(error);
