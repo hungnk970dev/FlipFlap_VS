@@ -1111,3 +1111,308 @@ a {
   height: 240px;
   object-fit: cover;
 }
+
+/* ============================================================
+   RECENT STUDY SESSIONS
+============================================================ */
+
+.ff-recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ff-recent-item {
+  background: var(--surface-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: 20px;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.ff-recent-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  background: #fffaf7;
+  box-shadow: 0 10px 26px rgba(153, 71, 0, 0.1);
+}
+
+.ff-recent-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--primary-container);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ff-recent-icon .material-symbols-outlined {
+  font-size: 30px;
+}
+
+.ff-recent-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--on-surface);
+}
+
+.ff-recent-meta {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font-weight: 650;
+}
+
+.ff-recent-score {
+  text-align: right;
+  min-width: 120px;
+}
+
+.ff-recent-time {
+  margin: 0 0 4px;
+  color: var(--on-surface-variant);
+  font-weight: 700;
+}
+
+.ff-recent-xp {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+/* ============================================================
+   ACHIEVEMENTS
+============================================================ */
+
+.ff-achievement-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ff-achievement-card.is-unlocked {
+  border-color: var(--primary);
+  background:
+    radial-gradient(circle at top right, rgba(255, 219, 200, 0.9), transparent 38%),
+    var(--surface-lowest);
+}
+
+.ff-achievement-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ff-achievement-icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  border-radius: 18px;
+  background: var(--surface-container);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ff-achievement-card.is-unlocked .ff-achievement-icon {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.ff-achievement-icon .material-symbols-outlined {
+  font-size: 34px;
+}
+
+.ff-achievement-name {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.ff-achievement-desc {
+  margin: 0;
+  color: var(--on-surface-variant);
+}
+
+.ff-achievement-progress {
+  margin-top: auto;
+}
+
+.ff-progress-track {
+  height: 10px;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--surface-container);
+  overflow: hidden;
+}
+
+.ff-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+  transition: width 0.35s ease;
+}
+
+.ff-achievement-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  color: var(--on-surface-variant);
+  font-weight: 750;
+}
+
+.ff-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  border-radius: 999px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.ff-badge-unlocked {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.ff-badge-locked {
+  background: var(--surface-container);
+  color: var(--on-surface-variant);
+}
+
+/* ============================================================
+   FOLDER HEADER ACTION FIX
+============================================================ */
+
+.ff-folder-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.ff-folder-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  white-space: nowrap;
+}
+
+.ff-folder-count {
+  color: var(--on-surface-variant);
+  font-weight: 900;
+}
+
+.ff-folder-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ff-folder-actions button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.ff-folder-actions button:hover {
+  background: var(--surface-container);
+  transform: translateY(-1px);
+}
+
+.ff-folder-actions button.danger:hover {
+  background: #ffdad6;
+  color: var(--error);
+}
+
+.ff-folder-actions .material-symbols-outlined,
+.ff-folder-right > .material-symbols-outlined {
+  font-size: 22px;
+}
+
+/* ============================================================
+   LOADING / PERCEIVED SPEED
+============================================================ */
+
+.ff-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-lowest);
+}
+
+.ff-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 219, 200, 0.55),
+    transparent
+  );
+  animation: ff-shimmer 1.1s infinite;
+}
+
+@keyframes ff-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.ff-skeleton-line {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--surface-container);
+}
+
+@media (max-width: 760px) {
+  .ff-recent-item {
+    grid-template-columns: 44px 1fr;
+  }
+
+  .ff-recent-score {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .ff-folder-header {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-folder-right {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}

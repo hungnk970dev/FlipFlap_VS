@@ -36,12 +36,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     currentUser = currentSession.user;
 
-    await api("ensureProfile", {
-      username: currentUser.email?.split("@")[0] || "Scholar",
-      email: currentUser.email,
+    const profileResult = await api("ensureProfile", {
+        username: currentUser.email?.split("@")[0] || "Scholar",
+        email: currentUser.email,
     });
 
-    await loadUserProfile(currentUser);
+    renderUserProfile(profileResult.user, currentUser);
 
     const page = getCurrentPage();
 
@@ -437,39 +437,43 @@ async function loadUserProfile(user) {
       email: user.email,
     });
 
-    const profile = result.user;
-    if (!profile) return;
-
-    const nameEl = document.getElementById("userName");
-    if (nameEl) nameEl.textContent = profile.username || "Scholar";
-
-    const levelEl = document.getElementById("userLevel");
-    if (levelEl) levelEl.textContent = `Level ${profile.level || 1} Scholar`;
-
-    const streakEl = document.getElementById("studyStreak");
-    if (streakEl) streakEl.textContent = profile.study_streak || 0;
-
-    const masteredEl = document.getElementById("totalMastered");
-    if (masteredEl) {
-      masteredEl.textContent = (profile.total_cards_mastered || 0).toLocaleString();
-    }
-
-    const hoursEl = document.getElementById("totalHours");
-    if (hoursEl) {
-      hoursEl.textContent = Math.round(Number(profile.total_study_hours || 0)) + "h";
-    }
-
-    const emailEl = document.getElementById("profileEmail");
-    if (emailEl) emailEl.value = profile.email || user.email || "";
-
-    const usernameEl = document.getElementById("profileUsername");
-    if (usernameEl) usernameEl.value = profile.username || "";
-
-    const avatarEl = document.getElementById("profileAvatarUrl");
-    if (avatarEl) avatarEl.value = profile.avatar_url || "";
+    renderUserProfile(result.user, user);
   } catch (err) {
-    console.warn("Không load được profile:", err);
+    console.warn("Cannot load profile:", err);
   }
+}
+
+
+function renderUserProfile(profile, user) {
+  if (!profile) return;
+
+  const nameEl = document.getElementById("userName");
+  if (nameEl) nameEl.textContent = profile.username || "Scholar";
+
+  const levelEl = document.getElementById("userLevel");
+  if (levelEl) levelEl.textContent = `Level ${profile.level || 1} Scholar`;
+
+  const streakEl = document.getElementById("studyStreak");
+  if (streakEl) streakEl.textContent = profile.study_streak || 0;
+
+  const masteredEl = document.getElementById("totalMastered");
+  if (masteredEl) {
+    masteredEl.textContent = (profile.total_cards_mastered || 0).toLocaleString();
+  }
+
+  const hoursEl = document.getElementById("totalHours");
+  if (hoursEl) {
+    hoursEl.textContent = Math.round(Number(profile.total_study_hours || 0)) + "h";
+  }
+
+  const emailEl = document.getElementById("profileEmail");
+  if (emailEl) emailEl.value = profile.email || user?.email || "";
+
+  const usernameEl = document.getElementById("profileUsername");
+  if (usernameEl) usernameEl.value = profile.username || "";
+
+  const avatarEl = document.getElementById("profileAvatarUrl");
+  if (avatarEl) avatarEl.value = profile.avatar_url || "";
 }
 
 // ============================================================
@@ -1265,36 +1269,36 @@ function renderFoldersAndSets(deck, folders, sets) {
           </div>
         </div>
 
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-          <span style="color:var(--on-surface-variant);font-weight:800;">
+        <div class="ff-folder-right">
+        <span class="ff-folder-count">
             ${folder.set_count || 0} sets · ${folder.card_count || 0} cards
-          </span>
+        </span>
 
-          <div class="ff-folder-actions">
+        <div class="ff-folder-actions">
             <button
-              type="button"
-              data-edit-folder="${folder.id}"
-              data-folder-name="${safeText(folder.name)}"
-              data-folder-desc="${safeText(folder.description || "")}"
-              title="Edit folder">
-              <span class="material-symbols-outlined">edit</span>
+            type="button"
+            data-edit-folder="${folder.id}"
+            data-folder-name="${safeText(folder.name)}"
+            data-folder-desc="${safeText(folder.description || "")}"
+            title="Edit folder">
+            <span class="material-symbols-outlined">edit</span>
             </button>
 
             <button
-              type="button"
-              class="danger"
-              data-delete-folder="${folder.id}"
-              data-folder-name="${safeText(folder.name)}"
-              title="Delete folder">
-              <span class="material-symbols-outlined">delete</span>
+            type="button"
+            class="danger"
+            data-delete-folder="${folder.id}"
+            data-folder-name="${safeText(folder.name)}"
+            title="Delete folder">
+            <span class="material-symbols-outlined">delete</span>
             </button>
-          </div>
+        </div>
 
-          <span
+        <span
             class="material-symbols-outlined"
             data-folder-chevron="${folder.id}">
             ${isFirst ? "expand_less" : "expand_more"}
-          </span>
+        </span>
         </div>
       </button>
 
@@ -2097,6 +2101,24 @@ async function initRecentPage() {
 
   if (!container) return;
 
+  container.className = "ff-recent-list";
+
+  container.innerHTML = `
+    ${[1, 2, 3].map(() => `
+      <div class="ff-recent-item ff-skeleton">
+        <div class="ff-recent-icon"></div>
+        <div>
+          <div class="ff-skeleton-line" style="width:45%;margin-bottom:10px;"></div>
+          <div class="ff-skeleton-line" style="width:72%;"></div>
+        </div>
+        <div class="ff-recent-score">
+          <div class="ff-skeleton-line" style="width:80px;margin-bottom:10px;"></div>
+          <div class="ff-skeleton-line" style="width:58px;"></div>
+        </div>
+      </div>
+    `).join("")}
+  `;
+
   try {
     const result = await api("listRecent");
     const sessions = result.sessions || [];
@@ -2104,44 +2126,65 @@ async function initRecentPage() {
     container.innerHTML = "";
 
     if (!sessions.length) {
-      container.innerHTML = `<p class="text-on-surface-variant">Chưa có phiên học nào.</p>`;
+      container.innerHTML = `
+        <div class="ff-card">
+          <h3 style="margin:0 0 8px;font-size:24px;font-weight:800;">
+            Chưa có phiên học nào
+          </h3>
+          <p style="margin:0;color:var(--on-surface-variant);">
+            Hãy bắt đầu học một set để xem lịch sử tại đây.
+          </p>
+        </div>
+      `;
       return;
     }
 
     sessions.forEach((session) => {
-      const item = document.createElement("div");
-
-      item.className =
-        "bg-surface-container-lowest border border-outline-variant rounded-xl p-lg mb-md";
+      const item = document.createElement("article");
+      item.className = "ff-recent-item";
 
       const deckName = session.decks?.name || "Unknown deck";
       const setName = session.sets?.name || "Unknown set";
 
+      const studied = Number(session.cards_studied || 0);
+      const correct = Number(session.cards_correct || 0);
+      const incorrect = Number(session.cards_incorrect || 0);
+      const xp = Number(session.xp_earned || 0);
+
       item.innerHTML = `
-        <div class="flex justify-between gap-md">
-          <div>
-            <h3 class="font-bold">
-              ${safeText(deckName)} / ${safeText(setName)}
-            </h3>
+        <div class="ff-recent-icon">
+          <span class="material-symbols-outlined">history_edu</span>
+        </div>
 
-            <p class="text-on-surface-variant">
-              ${session.cards_studied || 0} cards •
-              ${session.cards_correct || 0} correct •
-              ${session.cards_incorrect || 0} incorrect
-            </p>
-          </div>
+        <div>
+          <h3 class="ff-recent-title">
+            ${safeText(deckName)} / ${safeText(setName)}
+          </h3>
 
-          <div class="text-right text-label-sm text-on-surface-variant">
-            <p>${timeAgo(session.started_at)}</p>
-            <p>+${session.xp_earned || 0} XP</p>
-          </div>
+          <p class="ff-recent-meta">
+            ${studied} cards · ${correct} correct · ${incorrect} incorrect
+          </p>
+        </div>
+
+        <div class="ff-recent-score">
+          <p class="ff-recent-time">${timeAgo(session.started_at)}</p>
+          <p class="ff-recent-xp">+${xp} XP</p>
         </div>
       `;
 
       container.appendChild(item);
     });
   } catch (err) {
-    showToast(err.message, "error");
+    container.innerHTML = `
+      <div class="ff-card">
+        <h3 style="margin:0 0 8px;font-size:22px;font-weight:800;">
+          Không tải được recent sessions
+        </h3>
+        <p style="margin:0;color:var(--on-surface-variant);">
+          ${safeText(err.message)}
+        </p>
+      </div>
+    `;
   }
 }
 
@@ -2157,6 +2200,23 @@ async function initAchievementsPage() {
 
   if (!container) return;
 
+  container.className = "ff-grid";
+
+  container.innerHTML = `
+    ${[1, 2, 3].map(() => `
+      <div class="ff-card ff-achievement-card ff-skeleton">
+        <div class="ff-achievement-top">
+          <div class="ff-achievement-icon"></div>
+          <div style="flex:1;">
+            <div class="ff-skeleton-line" style="width:55%;margin-bottom:12px;"></div>
+            <div class="ff-skeleton-line" style="width:80%;"></div>
+          </div>
+        </div>
+        <div class="ff-skeleton-line" style="width:100%;height:10px;margin-top:auto;"></div>
+      </div>
+    `).join("")}
+  `;
+
   try {
     const result = await api("listAchievements");
     const achievements = result.achievements || [];
@@ -2164,51 +2224,81 @@ async function initAchievementsPage() {
     container.innerHTML = "";
 
     if (!achievements.length) {
-      container.innerHTML = `<p class="text-on-surface-variant">Chưa có achievement nào.</p>`;
+      container.innerHTML = `
+        <div class="ff-card" style="grid-column:1/-1;">
+          <h3 style="margin:0 0 8px;font-size:24px;font-weight:800;">
+            Chưa có achievement nào
+          </h3>
+          <p style="margin:0;color:var(--on-surface-variant);">
+            Học bài, tạo deck và thêm cards để mở khóa badges.
+          </p>
+        </div>
+      `;
       return;
     }
 
     achievements.forEach((badge) => {
       const progress = badge.target
-        ? Math.min(100, Math.round((badge.progress / badge.target) * 100))
+        ? Math.min(100, Math.round((Number(badge.progress || 0) / Number(badge.target || 1)) * 100))
         : 0;
 
-      const item = document.createElement("div");
+      const unlocked = Boolean(badge.is_unlocked);
 
-      item.className =
-        "achievement-card bg-surface-container-lowest border border-outline-variant rounded-xl p-lg";
+      const item = document.createElement("article");
+      item.className = `ff-card ff-card-lift ff-achievement-card ${
+        unlocked ? "is-unlocked" : ""
+      }`;
 
       item.innerHTML = `
-        <div class="flex items-center gap-md mb-md">
-          <span class="material-symbols-outlined text-primary text-4xl">
-            ${safeText(badge.badge_icon || "emoji_events")}
-          </span>
+        <div class="ff-achievement-top">
+          <div class="ff-achievement-icon">
+            <span class="material-symbols-outlined">
+              ${safeText(badge.badge_icon || "emoji_events")}
+            </span>
+          </div>
 
           <div>
-            <h3 class="font-bold">
-              ${safeText(badge.badge_name)}
+            <h3 class="ff-achievement-name">
+              ${safeText(badge.badge_name || "Achievement")}
             </h3>
 
-            <p class="text-on-surface-variant">
+            <p class="ff-achievement-desc">
               ${safeText(badge.badge_description || "")}
             </p>
           </div>
         </div>
 
-        <div class="w-full bg-surface-container rounded-full h-2">
-          <div class="bg-primary h-2 rounded-full" style="width:${progress}%"></div>
-        </div>
+        <div class="ff-achievement-progress">
+          <div class="ff-progress-track">
+            <div class="ff-progress-fill" style="width:${progress}%"></div>
+          </div>
 
-        <p class="text-label-sm text-on-surface-variant mt-sm">
-          ${badge.progress || 0}/${badge.target || 0}
-          ${badge.is_unlocked ? "• Unlocked" : ""}
-        </p>
+          <div class="ff-achievement-foot">
+            <span>${badge.progress || 0}/${badge.target || 0}</span>
+
+            <span class="ff-badge ${unlocked ? "ff-badge-unlocked" : "ff-badge-locked"}">
+              <span class="material-symbols-outlined" style="font-size:17px;">
+                ${unlocked ? "check_circle" : "lock"}
+              </span>
+              ${unlocked ? "Unlocked" : "Locked"}
+            </span>
+          </div>
+        </div>
       `;
 
       container.appendChild(item);
     });
   } catch (err) {
-    showToast(err.message, "error");
+    container.innerHTML = `
+      <div class="ff-card" style="grid-column:1/-1;">
+        <h3 style="margin:0 0 8px;font-size:22px;font-weight:800;">
+          Không tải được achievements
+        </h3>
+        <p style="margin:0;color:var(--on-surface-variant);">
+          ${safeText(err.message)}
+        </p>
+      </div>
+    `;
   }
 }
 
