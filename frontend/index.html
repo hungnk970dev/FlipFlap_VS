@@ -111,6 +111,9 @@
   
   <!-- Custom Styles -->
   <style>
+    body {
+      zoom: 0.9;
+    }
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
@@ -124,6 +127,8 @@
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/supabase-config.js"></script>
+  <script src="./js/app-supabase.js"></script>
 </head>
 
 <body class="bg-surface font-body-md text-on-surface">
@@ -132,7 +137,8 @@
   <header class="bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none fixed top-0 full-width z-50 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base">
     
     <!-- Logo -->
-    <div class="flex items-center gap-base">
+    <div class="flex items-center gap-md">
+      <span class="material-symbols-outlined text-primary text-headline-lg">school</span>
       <span class="font-display-lg text-headline-lg font-bold text-primary dark:text-primary-container">Flip Flash</span>
     </div>
     
@@ -189,19 +195,19 @@
         
         <!-- Navigation Links -->
         <nav class="space-y-sm">
-          <a class="flex items-center gap-md p-md bg-primary-container dark:bg-primary-fixed text-on-primary-container font-bold rounded-xl active:translate-x-1 duration-200" href="#">
+          <a class="flex items-center gap-md p-md bg-primary-container dark:bg-primary-fixed text-on-primary-container font-bold rounded-xl active:translate-x-1 duration-200" href="index.html">
             <span class="material-symbols-outlined" data-icon="home">home</span>
             <span>Home</span>
           </a>
-          <a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200" href="#">
+          <a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200" href="decks.html">
             <span class="material-symbols-outlined" data-icon="library_books">library_books</span>
             <span>My Decks</span>
           </a>
-          <a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200" href="#">
+          <a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200" href="recent.html">
             <span class="material-symbols-outlined" data-icon="history">history</span>
             <span>Recent</span>
           </a>
-          <a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200" href="#">
+          <a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200" href="achievements.html">
             <span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
             <span>Achievements</span>
           </a>
@@ -210,11 +216,11 @@
       
       <!-- Bottom Links -->
       <div class="mt-auto border-t border-outline-variant pt-md">
-        <a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+        <a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="manage-account.html">
           <span class="material-symbols-outlined" data-icon="settings">settings</span>
           <span>Settings</span>
         </a>
-        <a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+        <a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="help.html">
           <span class="material-symbols-outlined" data-icon="help">help</span>
           <span>Help</span>
         </a>
@@ -246,7 +252,7 @@
         </div>
 
         <!-- ==================== BENTO GRID - DECKS ==================== -->
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg" id="decksGrid">
           
           <!-- Deck Card 1: Advanced Physiology -->
           <div class="card-lift relative group bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
@@ -357,7 +363,7 @@
           </div>
 
           <!-- ==================== ADD NEW DECK SECTION ==================== -->
-          <div class="col-span-1 md:col-span-2 xl:col-span-3 bg-primary-container/20 rounded-2xl border-2 border-dashed border-primary/30 flex flex-col items-center justify-center text-center p-lg md:p-xl">
+          <div id="addDeckSection" class="col-span-1 md:col-span-2 xl:col-span-3 bg-primary-container/20 rounded-2xl border-2 border-dashed border-primary/30 flex flex-col items-center justify-center text-center p-lg md:p-xl">
             
             <div class="bg-primary text-on-primary w-16 h-16 rounded-full flex items-center justify-center mb-md shadow-lg">
               <span class="material-symbols-outlined text-[32px]">add_circle</span>

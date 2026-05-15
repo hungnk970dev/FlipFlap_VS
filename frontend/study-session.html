@@ -104,34 +104,63 @@
         }
     </script>
 <style>
+        body {
+            zoom: 0.9;
+        }
+        .perspective-1000 {
+        perspective: 1000px;
+        }
+
         .flashcard-inner {
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
+            position: relative;
         }
+
+        /* Hiệu ứng lật */
         .flip-active .flashcard-inner {
             transform: rotateY(180deg);
         }
+
+        /* Hiệu ứng nổi lên khi di chuột (Hover) */
+        .group:hover .flashcard-inner {
+            box-shadow: 0px 20px 40px rgba(0,0,0,0.2);
+            transform: translateY(-5px) scale(1.01);
+        }
+        
+        /* Khi đã lật rồi thì vẫn giữ hiệu ứng nổi nhưng phải cộng thêm xoay 180 độ */
+        .flip-active:hover .flashcard-inner {
+            transform: rotateY(180deg) translateY(-5px) scale(1.01);
+        }
+
         .flashcard-front, .flashcard-back {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            border-radius: 32px;
         }
+
         .flashcard-back {
             transform: rotateY(180deg);
             background-image: radial-gradient(#e0c0af 0.5px, transparent 0.5px);
             background-size: 16px 16px;
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase-config.js"></script>
+    <script src="./js/app-supabase.js"></script>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
 <!-- TopAppBar -->
 <header class="bg-surface-container-lowest dark:bg-surface-dim shadow-sm dark:shadow-none border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base sticky top-0 z-50">
-<div class="flex items-center gap-md">
-<span class="material-symbols-outlined text-primary text-headline-lg">school</span>
-<h1 class="font-display-lg text-headline-lg font-bold text-primary dark:text-primary-container">Flip Flash</h1>
-</div>
+<a href="index.html" class="flex items-center gap-md hover:opacity-80 transition-opacity">
+    <span class="material-symbols-outlined text-primary text-headline-lg">school</span>
+    <span class="font-display-lg text-headline-lg font-bold text-primary">Flip Flash</span>
+</a>
 <nav class="hidden md:flex gap-lg items-center">
 <a class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary py-xs px-sm" href="#">Study Session</a>
 <a class="font-headline-md text-headline-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-lg py-xs px-sm" href="#">My Decks</a>
@@ -167,7 +196,7 @@
 </div>
 </div>
 <!-- Flashcard Container -->
-<div class="relative w-full max-w-2xl aspect-[4/3] group perspective-1000 cursor-pointer">
+<div class="relative w-full max-w-md aspect-[4/3] group perspective-1000 cursor-pointer" onclick="this.classList.toggle('flip-active')">
 <!-- Instructions Overlay (Implicit) -->
 <div class="absolute -top-12 left-1/2 -translate-x-1/2 text-on-surface-variant animate-bounce">
 <span class="font-label-lg text-label-lg">Tap to flip the card</span>
@@ -176,7 +205,7 @@
 <!-- Front Side -->
 <div class="flashcard-front absolute inset-0 bg-surface-container-lowest border-2 border-outline-variant rounded-[32px] flex flex-col items-center justify-center p-xl text-center">
 <span class="text-primary font-label-lg uppercase tracking-widest mb-lg">Question</span>
-<h2 class="font-display-lg text-display-lg text-on-surface leading-tight">What is the capital city of France?</h2>
+<h2 class="font-display-md text-display-md text-on-surface leading-tight">What is the capital city of France?</h2>
 <div class="mt-xl">
 <img alt="Map of France" class="w-48 h-32 object-cover rounded-xl shadow-sm border border-outline-variant" data-alt="A clean, minimalist educational map of France highlighted in a soft orange color against a crisp white background. The map features elegant, thin borders and is presented in a modern, light-mode aesthetic consistent with a high-end educational application. The overall mood is professional, clear, and encouraging for a learning environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDQOFOGqZ3q1BftHU7iNHuJKHkPYwmpaZcLCvQdPY84_lcBAQ2EjG-2SYT6umR-Dxq2ulh6jSfMNU9GnZHbQgdYgIIHp4zQCgPQLd9YFJU84ejrMhIrFKVHBFLeHOiNsbOUygaLhPHMyCspbdBVA4Lv_-RKo2kuBACzDy2VmUsFYt66WfKUUtepHWtgSZ3_mxNFy05nH9HO9uQcIwBbmlTydokp7OZW5zeOyO7OY15PM40zHgA6UjuPoOtbZRbIHvMPcVMqnA0Joo"/>
 </div>
@@ -190,15 +219,15 @@
 </div>
 </div>
 <!-- Action Controls -->
-<div class="mt-xl flex gap-lg w-full max-w-2xl justify-center">
-<button class="flex-1 max-w-[240px] flex items-center justify-center gap-sm bg-surface-container-highest hover:bg-error-container text-on-surface-variant hover:text-on-error-container font-headline-md text-headline-md py-md rounded-2xl border-2 border-transparent transition-all active:scale-95 group">
-<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="close">close</span>
-                Still Learning
-            </button>
-<button class="flex-1 max-w-[240px] flex items-center justify-center gap-sm bg-primary text-on-primary font-headline-md text-headline-md py-md rounded-2xl border-2 border-primary-container shadow-lg hover:shadow-xl transition-all active:scale-95 group">
-<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="check">check</span>
-                Got It
-            </button>
+<div class="mt-8 flex gap-md w-full max-w-md justify-center"> <button class="flex-1 max-w-[180px] flex items-center justify-center gap-2 bg-surface-container-highest hover:bg-error-container text-on-surface-variant hover:text-on-error-container font-bold text-title-md py-2.5 rounded-xl border-2 border-transparent transition-all active:scale-95 group">
+        <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform" data-icon="close">close</span>
+        Still Learning
+    </button>
+
+    <button class="flex-1 max-w-[180px] flex items-center justify-center gap-2 bg-primary text-on-primary font-bold text-title-md py-2.5 rounded-xl border-2 border-primary-container shadow-md hover:shadow-xl transition-all active:scale-95 group">
+        <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform" data-icon="check">check</span>
+        Got It
+    </button>
 </div>
 <!-- Progress Footer (Bottom Bar Implementation) -->
 <div class="fixed bottom-0 left-0 w-full z-50 px-4 pb-safe pt-4 bg-surface-container/90 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)]">
