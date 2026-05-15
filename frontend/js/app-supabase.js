@@ -1255,52 +1255,60 @@ function renderFoldersAndSets(deck, folders, sets) {
         class="ff-folder-header"
         data-toggle-folder="${folder.id}">
 
-        <div class="ff-folder-title-wrap">
-          <span class="material-symbols-outlined">folder</span>
+        <div class="ff-folder-main">
+            <span class="material-symbols-outlined">folder</span>
 
-          <div>
+            <div style="min-width:0;">
             <h3 class="ff-folder-title">
-              ${safeText(folder.name)}
+                ${safeText(folder.name)}
             </h3>
 
-            <p class="ff-folder-sub">
-              ${safeText(folder.description || "")}
-            </p>
-          </div>
+            ${
+                folder.description
+                ? `<p class="ff-folder-sub">${safeText(folder.description)}</p>`
+                : ""
+            }
+            </div>
         </div>
 
-        <div class="ff-folder-right">
         <span class="ff-folder-count">
             ${folder.set_count || 0} sets · ${folder.card_count || 0} cards
         </span>
 
-        <div class="ff-folder-actions">
-            <button
-            type="button"
+        <span class="ff-folder-action-cluster">
+            <span
+            role="button"
+            tabindex="0"
+            class="ff-mini-icon-btn"
             data-edit-folder="${folder.id}"
             data-folder-name="${safeText(folder.name)}"
             data-folder-desc="${safeText(folder.description || "")}"
             title="Edit folder">
             <span class="material-symbols-outlined">edit</span>
-            </button>
+            </span>
 
-            <button
-            type="button"
-            class="danger"
+            <span
+            role="button"
+            tabindex="0"
+            class="ff-mini-icon-btn danger"
             data-delete-folder="${folder.id}"
             data-folder-name="${safeText(folder.name)}"
             title="Delete folder">
             <span class="material-symbols-outlined">delete</span>
-            </button>
-        </div>
+            </span>
 
-        <span
-            class="material-symbols-outlined"
-            data-folder-chevron="${folder.id}">
-            ${isFirst ? "expand_less" : "expand_more"}
+            <span
+            role="button"
+            tabindex="0"
+            class="ff-mini-icon-btn"
+            data-folder-chevron="${folder.id}"
+            title="Toggle folder">
+            <span class="material-symbols-outlined">
+                ${isFirst ? "expand_less" : "expand_more"}
+            </span>
+            </span>
         </span>
-        </div>
-      </button>
+        </button>
 
       <div
         class="ff-folder-body ${isFirst ? "" : "is-collapsed"}"
@@ -1318,56 +1326,62 @@ function renderFoldersAndSets(deck, folders, sets) {
                         data-open-set="${set.id}"
                         data-folder-id="${folder.id}">
 
-                        <h4 class="ff-set-title">
-                          <span class="material-symbols-outlined">
-                            ${safeText(set.icon || "style")}
-                          </span>
-                          ${safeText(set.name)}
-                        </h4>
+                        <div class="ff-set-card-top">
+                            <h4 class="ff-set-title">
+                            <span class="material-symbols-outlined">
+                                ${safeText(set.icon || "style")}
+                            </span>
+                            ${safeText(set.name)}
+                            </h4>
+
+                            <div class="ff-set-icon-actions">
+                            <button
+                                type="button"
+                                class="ff-mini-icon-btn"
+                                data-edit-set="${set.id}"
+                                data-set-name="${safeText(set.name)}"
+                                data-set-desc="${safeText(set.description || "")}"
+                                title="Edit set">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="ff-mini-icon-btn danger"
+                                data-delete-set="${set.id}"
+                                data-set-name="${safeText(set.name)}"
+                                title="Delete set">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                            </div>
+                        </div>
 
                         <p class="ff-set-desc">
-                          ${safeText(set.description || "")}
+                            ${safeText(set.description || "")}
                         </p>
 
-                        <p style="margin:0 0 14px;color:var(--on-surface-variant);font-weight:700;">
-                          ${set.card_count || 0} cards ·
-                          ${Math.round(Number(set.mastery_percentage || 0))}% mastered
+                        <p class="ff-set-meta">
+                            ${set.card_count || 0} cards ·
+                            ${Math.round(Number(set.mastery_percentage || 0))}% mastered
                         </p>
 
                         <div class="ff-set-actions">
-                          <button
+                            <button
                             type="button"
                             class="ff-btn ff-btn-soft"
                             data-open-cards="${set.id}"
                             data-folder-id="${folder.id}">
                             Cards
-                          </button>
+                            </button>
 
-                          <button
+                            <button
                             type="button"
                             class="ff-btn ff-btn-primary"
                             data-study-set="${set.id}">
                             Study
-                          </button>
-
-                          <button
-                            type="button"
-                            class="ff-btn ff-btn-soft"
-                            data-edit-set="${set.id}"
-                            data-set-name="${safeText(set.name)}"
-                            data-set-desc="${safeText(set.description || "")}">
-                            Edit
-                          </button>
-
-                          <button
-                            type="button"
-                            class="ff-btn ff-btn-danger"
-                            data-delete-set="${set.id}"
-                            data-set-name="${safeText(set.name)}">
-                            Delete
-                          </button>
+                            </button>
                         </div>
-                      </article>
+                        </article>
                     `
                   )
                   .join("")}
@@ -1389,22 +1403,28 @@ function renderFoldersAndSets(deck, folders, sets) {
 
   // Toggle folder expand / collapse
   document.querySelectorAll("[data-toggle-folder]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const folderId = btn.dataset.toggleFolder;
-      const body = document.querySelector(`[data-folder-body="${folderId}"]`);
-      const chevron = document.querySelector(`[data-folder-chevron="${folderId}"]`);
+  btn.addEventListener("click", (e) => {
+    if (e.target.closest("[data-edit-folder]")) return;
+    if (e.target.closest("[data-delete-folder]")) return;
+    if (e.target.closest("[data-folder-chevron]")) {
+      // vẫn cho toggle khi bấm chevron
+    }
 
-      if (!body) return;
+    const folderId = btn.dataset.toggleFolder;
+    const body = document.querySelector(`[data-folder-body="${folderId}"]`);
+    const chevron = document.querySelector(`[data-folder-chevron="${folderId}"] .material-symbols-outlined`);
 
-      body.classList.toggle("is-collapsed");
+    if (!body) return;
 
-      if (chevron) {
-        chevron.textContent = body.classList.contains("is-collapsed")
-          ? "expand_more"
-          : "expand_less";
-      }
-    });
+    body.classList.toggle("is-collapsed");
+
+    if (chevron) {
+      chevron.textContent = body.classList.contains("is-collapsed")
+        ? "expand_more"
+        : "expand_less";
+    }
   });
+});
 
   // Click whole set card to open cards page
   document.querySelectorAll("[data-open-set]").forEach((card) => {
@@ -1441,25 +1461,38 @@ function renderFoldersAndSets(deck, folders, sets) {
 
   // Edit folder
   document.querySelectorAll("[data-edit-folder]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      const idInput = document.getElementById("editFolderId");
-      const nameInput = document.getElementById("editFolderName");
-      const descInput = document.getElementById("editFolderDesc");
+    document.getElementById("editFolderId").value = btn.dataset.editFolder;
+    document.getElementById("editFolderName").value = btn.dataset.folderName || "";
+    document.getElementById("editFolderDesc").value = btn.dataset.folderDesc || "";
 
-      if (!idInput || !nameInput || !descInput) {
-        showToast("Thiếu editFolderModal trong deck-details.html.", "error");
-        return;
-      }
-
-      idInput.value = btn.dataset.editFolder;
-      nameInput.value = btn.dataset.folderName || "";
-      descInput.value = btn.dataset.folderDesc || "";
-
-      openModal("editFolderModal");
+    openModal("editFolderModal");
     });
-  });
+});
+
+    document.querySelectorAll("[data-delete-folder]").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const ok = confirm(
+        `Delete this folder "${btn.dataset.folderName}"? All sets and cards inside will also be deleted.`
+        );
+
+        if (!ok) return;
+
+        try {
+        await deleteFolder(btn.dataset.deleteFolder);
+        showToast("Deleted folder.", "success");
+        await loadDeckBundleAndRender(deck.id);
+        } catch (err) {
+        showToast(err.message, "error");
+        }
+    });
+    });
 
   // Delete folder
   document.querySelectorAll("[data-delete-folder]").forEach((btn) => {
@@ -1467,7 +1500,7 @@ function renderFoldersAndSets(deck, folders, sets) {
       e.stopPropagation();
 
       const ok = confirm(
-        `Xóa folder "${btn.dataset.folderName}"? Toàn bộ sets và cards bên trong cũng sẽ bị xóa.`
+        `Delete this folder "${btn.dataset.folderName}"? All sets and cards inside will also be deleted.`
       );
 
       if (!ok) return;
@@ -1475,7 +1508,7 @@ function renderFoldersAndSets(deck, folders, sets) {
       try {
         await deleteFolder(btn.dataset.deleteFolder);
 
-        showToast("Đã xóa folder.", "success");
+        showToast("Deleted folder.", "success");
 
         await loadDeckBundleAndRender(deck.id);
       } catch (err) {
@@ -1512,7 +1545,7 @@ function renderFoldersAndSets(deck, folders, sets) {
       e.stopPropagation();
 
       const ok = confirm(
-        `Xóa set "${btn.dataset.setName}"? Toàn bộ cards trong set này cũng sẽ bị xóa.`
+        `Delete this set "${btn.dataset.setName}"? All cards inside will also be deleted.`
       );
 
       if (!ok) return;
@@ -1520,7 +1553,7 @@ function renderFoldersAndSets(deck, folders, sets) {
       try {
         await deleteSet(btn.dataset.deleteSet);
 
-        showToast("Đã xóa set.", "success");
+        showToast("Deleted set.", "success");
 
         await loadDeckBundleAndRender(deck.id);
       } catch (err) {
@@ -1561,12 +1594,12 @@ async function initCardsPage() {
     const difficulty = Number(document.getElementById("cardDifficulty")?.value || 1);
 
     if (!question) {
-        showToast("Vui lòng nhập câu hỏi.", "error");
+        showToast("Please enter a question.", "error");
         return;
     }
 
     if (!answer) {
-        showToast("Vui lòng nhập câu trả lời.", "error");
+        showToast("Please enter an answer.", "error");
         return;
     }
 
@@ -1575,8 +1608,105 @@ async function initCardsPage() {
         let imageUrl = null;
 
         if (imageFile) {
-        showToast("Đang tải ảnh lên...", "info");
-        imageUrl = await uploadCardImage(imageFile);
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+        if (imageFile) {
+        showToast("Please enter an answer.", "error");
+        return;
+    }
+
+    try {
+        const imageFile = document.getElementById("cardImageFile")?.files?.[0] || null;
+        let imageUrl = null;
+
+=======
+
+    if (!answer) {
+        showToast("Please enter an answer.", "error");
+=======
+
+    if (!answer) {
+=======
+
+    if (!answer) {
         }
 
         await createCard({
