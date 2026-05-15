@@ -1,296 +1,227 @@
 <!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Cards - Flip Flash</title>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Deck Editor - Flip Flash</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        body { font-family: 'Montserrat', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .card-row-shadow {
-            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
-        }
-        .card-row-focus:focus-within {
-            box-shadow: 0px 8px 30px rgba(0,0,0,0.12);
-            border-color: #994700;
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "secondary-fixed-dim": "#c8c6c5",
-                      "on-primary-fixed": "#321300",
-                      "on-error-container": "#93000a",
-                      "tertiary": "#006397",
-                      "on-secondary": "#ffffff",
-                      "on-error": "#ffffff",
-                      "surface-container-high": "#fbe4d7",
-                      "outline": "#8c7263",
-                      "on-secondary-container": "#656464",
-                      "error-container": "#ffdad6",
-                      "surface-tint": "#994700",
-                      "on-tertiary": "#ffffff",
-                      "tertiary-container": "#00a9fd",
-                      "on-primary-fixed-variant": "#743500",
-                      "surface": "#fff8f5",
-                      "surface-variant": "#f5ded2",
-                      "primary-container": "#ff7b00",
-                      "surface-container": "#ffeadf",
-                      "surface-container-low": "#fff1ea",
-                      "error": "#ba1a1a",
-                      "secondary": "#5f5e5e",
-                      "tertiary-fixed-dim": "#92ccff",
-                      "on-secondary-fixed-variant": "#474646",
-                      "secondary-container": "#e5e2e1",
-                      "on-surface-variant": "#584235",
-                      "primary-fixed": "#ffdbc8",
-                      "primary-fixed-dim": "#ffb68a",
-                      "surface-container-lowest": "#ffffff",
-                      "on-primary-container": "#5d2900",
-                      "surface-dim": "#edd5ca",
-                      "on-surface": "#251912",
-                      "on-tertiary-container": "#003b5c",
-                      "on-secondary-fixed": "#1c1b1b",
-                      "inverse-primary": "#ffb68a",
-                      "on-primary": "#ffffff",
-                      "on-tertiary-fixed-variant": "#004b73",
-                      "surface-bright": "#fff8f5",
-                      "inverse-on-surface": "#ffede5",
-                      "on-background": "#251912",
-                      "background": "#fff8f5",
-                      "primary": "#994700",
-                      "tertiary-fixed": "#cce5ff",
-                      "surface-container-highest": "#f5ded2",
-                      "inverse-surface": "#3b2d26",
-                      "on-tertiary-fixed": "#001d31",
-                      "secondary-fixed": "#e5e2e1",
-                      "outline-variant": "#e0c0af"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "base": "8px",
-                      "gutter": "16px",
-                      "xl": "48px",
-                      "lg": "24px",
-                      "sm": "8px",
-                      "md": "16px",
-                      "margin-mobile": "16px",
-                      "margin-desktop": "32px",
-                      "xs": "4px"
-              },
-              "fontFamily": {
-                      "headline-md": ["Montserrat"],
-                      "headline-lg-mobile": ["Montserrat"],
-                      "display-lg": ["Montserrat"],
-                      "headline-lg": ["Montserrat"],
-                      "body-md": ["Montserrat"],
-                      "body-lg": ["Montserrat"],
-                      "label-sm": ["Montserrat"],
-                      "label-lg": ["Montserrat"]
-              },
-              "fontSize": {
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
-                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
-              }
-            },
-          },
-        }
-      </script>
-
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-        <script src="./js/supabase-config.js"></script>
-        <script src="./js/app-supabase.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/flipflash-ui.css"/>
 </head>
-<body class="bg-surface text-on-surface">
-<header class="bg-surface-container-lowest dark:bg-surface-dim shadow-sm dark:shadow-none border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base sticky top-0 z-50">
-<div class="flex items-center gap-md">
-<h1 class="font-display-lg text-headline-lg font-bold text-primary dark:text-primary-container">Flip Flash</h1>
-</div>
-<div class="hidden md:flex items-center bg-surface-container-low rounded-xl px-md py-xs border border-outline-variant max-w-xl flex-1 mx-xl">
-<input class="bg-transparent border-none focus:ring-0 font-headline-md text-headline-md text-primary w-full" type="text" value="Advanced Neurobiology 101"/>
-<span class="material-symbols-outlined text-outline ml-xs">edit</span>
-</div>
-<div class="flex items-center gap-md">
-<button class="flex items-center gap-xs px-lg py-sm bg-primary-container text-on-primary-container rounded-full font-label-lg text-label-lg hover:bg-surface-container-high transition-colors active:scale-95 duration-150 ease-in-out shadow-sm">
-<span class="material-symbols-outlined">save</span>
-            Save Changes
+
+<body>
+  <header class="ff-topbar">
+    <a href="index.html" class="ff-brand">
+      <span class="material-symbols-outlined">school</span>
+      <span>Flip Flash</span>
+    </a>
+
+    <div class="ff-search">
+      <span class="material-symbols-outlined">search</span>
+      <input placeholder="Search cards..." type="text"/>
+    </div>
+
+    <div class="ff-top-actions">
+      <button data-theme-toggle class="ff-icon-btn" type="button">
+        <span class="material-symbols-outlined" data-icon="contrast">contrast</span>
+      </button>
+      <a class="ff-icon-btn" href="manage-account.html">
+        <span class="material-symbols-outlined">account_circle</span>
+      </a>
+    </div>
+  </header>
+
+  <aside class="ff-sidebar">
+    <div class="ff-user">
+      <img class="ff-avatar" src="https://ui-avatars.com/api/?name=Flip+Flash&background=ffdbc8&color=994700" alt="User"/>
+      <div>
+        <p id="userName" class="ff-user-name">Scholar</p>
+        <p id="userLevel" class="ff-user-level">Level 1 Scholar</p>
+      </div>
+    </div>
+
+    <nav class="ff-nav">
+      <a href="index.html">
+        <span class="material-symbols-outlined">home</span>
+        Home
+      </a>
+      <a href="decks.html" class="active">
+        <span class="material-symbols-outlined">library_books</span>
+        My Decks
+      </a>
+      <a href="recent.html">
+        <span class="material-symbols-outlined">history</span>
+        Recent
+      </a>
+      <a href="achievements.html">
+        <span class="material-symbols-outlined">workspace_premium</span>
+        Achievements
+      </a>
+    </nav>
+
+    <div class="ff-sidebar-bottom ff-nav">
+      <a href="manage-account.html">
+        <span class="material-symbols-outlined">settings</span>
+        Settings
+      </a>
+      <button id="logoutBtn" type="button">
+        <span class="material-symbols-outlined">logout</span>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <main class="ff-main">
+    <div class="ff-container">
+      <section class="ff-page-header">
+        <div>
+          <p class="ff-kicker">Set Editor</p>
+          <h1 class="ff-title">Cards</h1>
+          <p class="ff-subtitle">
+            <span id="cardsCount">0</span> cards in this set.
+          </p>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="studySetBtn" class="ff-btn ff-btn-tonal" type="button">
+            Study Set
+          </button>
+          <button data-modal-open="createCardModal" class="ff-btn ff-btn-primary" type="button">
+            <span class="material-symbols-outlined">add</span>
+            Add Card
+          </button>
+        </div>
+      </section>
+
+      <section id="cardsContainer"></section>
+    </div>
+  </main>
+
+  <nav class="ff-mobile-nav">
+    <a href="index.html">
+      <span class="material-symbols-outlined">home</span>
+      Home
+    </a>
+    <a href="decks.html" class="active">
+      <span class="material-symbols-outlined">library_books</span>
+      Decks
+    </a>
+    <button data-modal-open="createCardModal" type="button">
+      <span class="material-symbols-outlined">add_circle</span>
+      Card
+    </button>
+    <a href="recent.html">
+      <span class="material-symbols-outlined">history</span>
+      Recent
+    </a>
+    <a href="manage-account.html">
+      <span class="material-symbols-outlined">person</span>
+      Profile
+    </a>
+  </nav>
+
+  <div id="authModal" class="ff-modal hidden">
+    <div class="ff-modal-panel ff-modal-wide">
+      <div class="ff-modal-head">
+        <div>
+          <h3>Welcome to Flip Flash</h3>
+          <p>Sign in or create an account to continue.</p>
+        </div>
+      </div>
+
+      <div class="ff-grid-2">
+        <form id="loginForm">
+          <h3>Sign In</h3>
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="loginEmail" type="email" required/>
+          </div>
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="loginPassword" type="password" required/>
+          </div>
+          <button class="ff-btn ff-btn-primary" type="submit" style="width:100%;">
+            Sign In
+          </button>
+        </form>
+
+        <form id="signupForm">
+          <h3>Create Account</h3>
+          <div class="ff-field">
+            <label>Username</label>
+            <input id="signupUsername" type="text"/>
+          </div>
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="signupEmail" type="email" required/>
+          </div>
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="signupPassword" type="password" required/>
+          </div>
+          <button class="ff-btn ff-btn-tonal" type="submit" style="width:100%;">
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="createCardModal" class="ff-modal hidden">
+    <div class="ff-modal-panel">
+      <div class="ff-modal-head">
+        <div>
+          <h3>Add Card</h3>
+          <p>Create a new flashcard.</p>
+        </div>
+        <button class="ff-icon-btn" data-modal-close="createCardModal" type="button">
+          <span class="material-symbols-outlined">close</span>
         </button>
-<div class="flex items-center gap-sm">
-<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim p-xs hover:bg-surface-container-high rounded-full cursor-pointer transition-colors">contrast</span>
-<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim p-xs hover:bg-surface-container-high rounded-full cursor-pointer transition-colors">account_circle</span>
-</div>
-</div>
-</header>
-<div class="flex">
-<aside class="h-screen w-64 hidden lg:flex flex-col border-r border-outline-variant dark:border-outline bg-surface dark:bg-surface-dim p-md fixed left-0 top-0 pt-32">
-<div class="mb-xl px-sm">
-<div class="flex items-center gap-md">
-<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-container shrink-0 bg-surface-container">
-<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHYrcstng1nvbRVK2V5QF9Yc23Br3vx4IZZddzDxIUeA3dsgr_2lS5mcvbg-onT2t_ow6fdr7L7BgCaAumlVlI7GSpC0jmJslC65KE1K4tzWfTh__xj2RVS2jSGN5ptW8Hnw5ZyRsDo7jVQwxWDuQnz578iB2RMk_Lvt8hRZcpY167z-dgWbeGwPfQGMOHsEe-3YA4MnD317W38NJyZbrDH0UKnyngXUSJg4X60nUXD8nd5UWGFqb__hXxX9oaFxRH42VTBJU3GH4"/>
-</div>
-<div>
-<h3 class="font-headline-md text-headline-md text-primary">Study Session</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Level 12 Scholar</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-xs">
-<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container transition-all rounded-xl active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="font-body-md text-body-md">Home</span>
-</a>
-<a class="flex items-center gap-md p-md bg-primary-container dark:bg-primary-fixed text-on-primary-container font-bold rounded-xl active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined">library_books</span>
-<span class="font-body-md text-body-md">My Decks</span>
-</a>
-<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container transition-all rounded-xl active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined">history</span>
-<span class="font-body-md text-body-md">Recent</span>
-</a>
-<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container transition-all rounded-xl active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined">workspace_premium</span>
-<span class="font-body-md text-body-md">Achievements</span>
-</a>
-<div class="pt-lg">
-<button class="w-full flex items-center justify-center gap-sm p-md bg-surface-container-high border border-outline-variant text-on-surface font-bold rounded-xl hover:bg-surface-container-highest transition-all active:scale-95 duration-150">
-<span class="material-symbols-outlined">add</span>
-<span class="font-body-md text-body-md">Create New Deck</span>
-</button>
-</div>
-</nav>
-<div class="mt-auto border-t border-outline-variant pt-md space-y-xs">
-<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-body-md text-body-md">Settings</span>
-</a>
-<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined">help</span>
-<span class="font-body-md text-body-md">Help</span>
-</a>
-</div>
-</aside>
-<main class="flex-1 lg:ml-64 p-margin-mobile md:p-margin-desktop bg-surface dark:bg-background min-h-screen pb-xl">
-<nav class="flex items-center gap-xs mb-lg text-on-surface-variant font-label-lg text-label-lg">
-<span>Home</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span>Deck</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span>Neuroscience</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span class="text-primary font-bold">Advanced Neurobiology 101</span>
-</nav>
-<div class="max-w-5xl mx-auto space-y-lg">
-<div class="flex justify-between items-end mb-md">
-<div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface">Editor</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Update your cards and definitions for this set.</p>
-</div>
-<div class="flex items-center gap-sm bg-surface-container px-md py-xs rounded-full border border-outline-variant">
-<span class="font-label-sm text-label-sm text-on-primary-container">Keyboard Hint:</span>
-<kbd class="px-sm py-1 bg-surface-container-lowest rounded border border-outline-variant text-[10px] font-bold">CMD + ENTER</kbd>
-<span class="font-label-sm text-label-sm text-on-primary-container">to Save</span>
-</div>
-</div>
-<div class="grid grid-cols-12 gap-md items-center font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider px-md">
-<div class="col-span-1 text-center">#</div>
-<div class="col-span-5">Front (Prompt/Question)</div>
-<div class="col-span-5">Back (Answer/Definition)</div>
-<div class="col-span-1"></div>
-</div>
-<div class="space-y-md">
-<div class="grid grid-cols-12 gap-md items-center bg-surface-container-lowest border border-outline-variant rounded-xl p-md card-row-shadow transition-all card-row-focus group">
-<div class="col-span-1 text-center font-bold text-outline">1</div>
-<div class="col-span-5 relative">
-<textarea class="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary-container font-body-md text-body-md min-h-[80px] p-md resize-none" placeholder="Enter term...">Long-term Potentiation (LTP)</textarea>
-<button class="absolute bottom-2 right-2 text-outline hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">image</span>
-</button>
-</div>
-<div class="col-span-5">
-<textarea class="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary-container font-body-md text-body-md min-h-[80px] p-md resize-none" placeholder="Enter definition...">A persistent strengthening of synapses based on recent patterns of activity. These are patterns of synaptic activity that produce a long-lasting increase in signal transmission between two neurons.</textarea>
-</div>
-<div class="col-span-1 flex justify-center">
-<button class="p-sm text-outline hover:text-error hover:bg-error-container rounded-full transition-all active:scale-90">
-<span class="material-symbols-outlined">delete</span>
-</button>
-</div>
-</div>
-<div class="grid grid-cols-12 gap-md items-center bg-surface-container-lowest border border-outline-variant rounded-xl p-md card-row-shadow transition-all card-row-focus group">
-<div class="col-span-1 text-center font-bold text-outline">2</div>
-<div class="col-span-5 relative">
-<textarea class="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary-container font-body-md text-body-md min-h-[80px] p-md resize-none" placeholder="Enter term...">Glutamate Receptors</textarea>
-<div class="mt-sm rounded-lg overflow-hidden border border-outline-variant">
-<img alt="Neuron graphic" class="w-full h-24 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClE3ALwYtmaSq4wB0sD0KcGY1FULCZh3ceUHgc5lSMD2-gv5t3wipzprhkZxWq7FISDmJdP0pKyJO4Ghgn7cX778elgywzSuB5GCMlz1Giv-9I8JKiNSpBo-xM1V4PHkj-HC1_xKnOaxiy2TPyBAfZtTlFbeIZ5o0E3eupYU0rNVBwCB9XbpioaBNnSl3qqTbeB2Wh2kHqo5tTtxEye-44b-osci-VxLsqb3BknhmorY14LEYZh0mIwulblJYwBp0fzUU0xyZu21I"/>
-</div>
-</div>
-<div class="col-span-5">
-<textarea class="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary-container font-body-md text-body-md min-h-[80px] p-md resize-none" placeholder="Enter definition...">Synaptic receptors located primarily on the membranes of neuronal effector cells. Glutamate is the most prominent neurotransmitter in the body.</textarea>
-</div>
-<div class="col-span-1 flex justify-center">
-<button class="p-sm text-outline hover:text-error hover:bg-error-container rounded-full transition-all active:scale-90">
-<span class="material-symbols-outlined">delete</span>
-</button>
-</div>
-</div>
-<div class="grid grid-cols-12 gap-md items-center bg-surface-container-lowest border border-outline-variant rounded-xl p-md card-row-shadow transition-all card-row-focus group">
-<div class="col-span-1 text-center font-bold text-outline">3</div>
-<div class="col-span-5">
-<textarea class="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary-container font-body-md text-body-md min-h-[80px] p-md resize-none" placeholder="Enter term..."></textarea>
-</div>
-<div class="col-span-5">
-<textarea class="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary-container font-body-md text-body-md min-h-[80px] p-md resize-none" placeholder="Enter definition..."></textarea>
-</div>
-<div class="col-span-1 flex justify-center">
-<button class="p-sm text-outline hover:text-error hover:bg-error-container rounded-full transition-all active:scale-90">
-<span class="material-symbols-outlined">delete</span>
-</button>
-</div>
-</div>
-</div>
-<button class="w-full py-xl border-2 border-dashed border-outline-variant rounded-2xl flex flex-col items-center justify-center gap-sm text-on-surface-variant hover:border-primary-container hover:bg-surface-container-low hover:text-primary transition-all group active:scale-[0.99]">
-<div class="w-12 h-12 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[32px]">add</span>
-</div>
-<span class="font-headline-md text-headline-md">Add New Card</span>
-<span class="font-label-lg text-label-lg opacity-60">or press Tab to auto-create</span>
-</button>
-</div>
-</main>
-</div>
-<footer class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 bg-surface-container/90 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl">
-<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary transition-transform hover:-translate-y-1">
-<span class="material-symbols-outlined">analytics</span>
-<span class="font-label-lg text-label-lg">Progress</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary transition-transform hover:-translate-y-1">
-<span class="material-symbols-outlined">shuffle</span>
-<span class="font-label-lg text-label-lg">Shuffle</span>
-</button>
-<button class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 mb-2 shadow-md Active: scale-90 transition-all duration-100 ease-out">
-<span class="material-symbols-outlined">swap_horiz</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary transition-transform hover:-translate-y-1">
-<span class="material-symbols-outlined">arrow_back</span>
-<span class="font-label-lg text-label-lg">Back</span>
-</button>
-</footer>
-</body></html>
+      </div>
+
+      <form id="createCardForm">
+        <div class="ff-field">
+          <label>Question</label>
+          <textarea id="cardQuestion" required></textarea>
+        </div>
+
+        <div class="ff-field">
+          <label>Answer</label>
+          <textarea id="cardAnswer" required></textarea>
+        </div>
+
+        <div class="ff-field">
+          <label>Image URL</label>
+          <input id="cardImageUrl" type="url" placeholder="Optional"/>
+        </div>
+
+        <div class="ff-field">
+          <label>Difficulty</label>
+          <select id="cardDifficulty">
+            <option value="1">1 - Easy</option>
+            <option value="2">2</option>
+            <option value="3">3 - Medium</option>
+            <option value="4">4</option>
+            <option value="5">5 - Hard</option>
+          </select>
+        </div>
+
+        <div class="ff-actions">
+          <button type="button" data-modal-close="createCardModal" class="ff-btn ff-btn-soft">
+            Cancel
+          </button>
+          <button type="submit" class="ff-btn ff-btn-primary">
+            Add Card
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/supabase-config.js"></script>
+  <script src="./js/app-supabase.js"></script>
+</body>
+</html>

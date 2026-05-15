@@ -1,296 +1,180 @@
 <!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Study - Flip Flash</title>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Study Mode - Flip Flash</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "secondary-fixed-dim": "#c8c6c5",
-                        "on-primary-fixed": "#321300",
-                        "on-error-container": "#93000a",
-                        "tertiary": "#006397",
-                        "on-secondary": "#ffffff",
-                        "on-error": "#ffffff",
-                        "surface-container-high": "#fbe4d7",
-                        "outline": "#8c7263",
-                        "on-secondary-container": "#656464",
-                        "error-container": "#ffdad6",
-                        "surface-tint": "#994700",
-                        "on-tertiary": "#ffffff",
-                        "tertiary-container": "#00a9fd",
-                        "on-primary-fixed-variant": "#743500",
-                        "surface": "#fff8f5",
-                        "surface-variant": "#f5ded2",
-                        "primary-container": "#ff7b00",
-                        "surface-container": "#ffeadf",
-                        "surface-container-low": "#fff1ea",
-                        "error": "#ba1a1a",
-                        "secondary": "#5f5e5e",
-                        "tertiary-fixed-dim": "#92ccff",
-                        "on-secondary-fixed-variant": "#474646",
-                        "secondary-container": "#e5e2e1",
-                        "on-surface-variant": "#584235",
-                        "primary-fixed": "#ffdbc8",
-                        "primary-fixed-dim": "#ffb68a",
-                        "surface-container-lowest": "#ffffff",
-                        "on-primary-container": "#5d2900",
-                        "surface-dim": "#edd5ca",
-                        "on-surface": "#251912",
-                        "on-tertiary-container": "#003b5c",
-                        "on-secondary-fixed": "#1c1b1b",
-                        "inverse-primary": "#ffb68a",
-                        "on-primary": "#ffffff",
-                        "on-tertiary-fixed-variant": "#004b73",
-                        "surface-bright": "#fff8f5",
-                        "inverse-on-surface": "#ffede5",
-                        "on-background": "#251912",
-                        "background": "#fff8f5",
-                        "primary": "#994700",
-                        "tertiary-fixed": "#cce5ff",
-                        "surface-container-highest": "#f5ded2",
-                        "inverse-surface": "#3b2d26",
-                        "on-tertiary-fixed": "#001d31",
-                        "secondary-fixed": "#e5e2e1",
-                        "outline-variant": "#e0c0af"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "base": "8px",
-                        "gutter": "16px",
-                        "xl": "48px",
-                        "lg": "24px",
-                        "sm": "8px",
-                        "md": "16px",
-                        "margin-mobile": "16px",
-                        "margin-desktop": "32px",
-                        "xs": "4px"
-                    },
-                    "fontFamily": {
-                        "headline-md": ["Montserrat"],
-                        "headline-lg-mobile": ["Montserrat"],
-                        "display-lg": ["Montserrat"],
-                        "headline-lg": ["Montserrat"],
-                        "body-md": ["Montserrat"],
-                        "body-lg": ["Montserrat"],
-                        "label-sm": ["Montserrat"],
-                        "label-lg": ["Montserrat"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
-                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
-                    }
-                },
-            },
-        }
-    </script>
-<style>
-        body {
-            zoom: 0.9;
-        }
-        .perspective-1000 {
-        perspective: 1000px;
-        }
-
-        .flashcard-inner {
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-            position: relative;
-        }
-
-        /* Hiệu ứng lật */
-        .flip-active .flashcard-inner {
-            transform: rotateY(180deg);
-        }
-
-        /* Hiệu ứng nổi lên khi di chuột (Hover) */
-        .group:hover .flashcard-inner {
-            box-shadow: 0px 20px 40px rgba(0,0,0,0.2);
-            transform: translateY(-5px) scale(1.01);
-        }
-        
-        /* Khi đã lật rồi thì vẫn giữ hiệu ứng nổi nhưng phải cộng thêm xoay 180 độ */
-        .flip-active:hover .flashcard-inner {
-            transform: rotateY(180deg) translateY(-5px) scale(1.01);
-        }
-
-        .flashcard-front, .flashcard-back {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            border-radius: 32px;
-        }
-
-        .flashcard-back {
-            transform: rotateY(180deg);
-            background-image: radial-gradient(#e0c0af 0.5px, transparent 0.5px);
-            background-size: 16px 16px;
-        }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./js/supabase-config.js"></script>
-    <script src="./js/app-supabase.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/flipflash-ui.css"/>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
-<!-- TopAppBar -->
-<header class="bg-surface-container-lowest dark:bg-surface-dim shadow-sm dark:shadow-none border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base sticky top-0 z-50">
-<a href="index.html" class="flex items-center gap-md hover:opacity-80 transition-opacity">
-    <span class="material-symbols-outlined text-primary text-headline-lg">school</span>
-    <span class="font-display-lg text-headline-lg font-bold text-primary">Flip Flash</span>
-</a>
-<nav class="hidden md:flex gap-lg items-center">
-<a class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary py-xs px-sm" href="#">Study Session</a>
-<a class="font-headline-md text-headline-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-lg py-xs px-sm" href="#">My Decks</a>
-</nav>
-<div class="flex items-center gap-md">
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-sm rounded-full transition-all">contrast</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-sm rounded-full transition-all">account_circle</button>
-</div>
-</header>
-<main class="flex-grow flex flex-col items-center justify-center relative p-margin-mobile md:p-margin-desktop overflow-hidden">
-<!-- Contextual Controls (Shuffle & Shortcut Legend) -->
-<div class="w-full max-w-4xl flex justify-between items-center mb-lg">
-<div class="flex items-center gap-md bg-surface-container-low px-md py-sm rounded-full border border-outline-variant shadow-sm">
-<span class="font-label-lg text-label-lg text-on-surface-variant">Shuffle Mode</span>
-<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary-container transition-colors">
-<span class="inline-block h-4 w-4 transform translate-x-6 rounded-full bg-on-primary-container transition-transform"></span>
-</button>
-<span class="material-symbols-outlined text-primary" data-icon="shuffle">shuffle</span>
-</div>
-<div class="hidden lg:flex gap-md items-center text-on-surface-variant">
-<div class="flex items-center gap-xs">
-<kbd class="px-2 py-1 bg-surface-container-highest border border-outline-variant rounded-lg text-label-sm font-bold">SPACE</kbd>
-<span class="text-label-sm">Flip</span>
-</div>
-<div class="flex items-center gap-xs">
-<kbd class="px-2 py-1 bg-surface-container-highest border border-outline-variant rounded-lg text-label-sm font-bold">1</kbd>
-<span class="text-label-sm">Review</span>
-</div>
-<div class="flex items-center gap-xs">
-<kbd class="px-2 py-1 bg-surface-container-highest border border-outline-variant rounded-lg text-label-sm font-bold">2</kbd>
-<span class="text-label-sm">Got It</span>
-</div>
-</div>
-</div>
-<!-- Flashcard Container -->
-<div class="relative w-full max-w-md aspect-[4/3] group perspective-1000 cursor-pointer" onclick="this.classList.toggle('flip-active')">
-<!-- Instructions Overlay (Implicit) -->
-<div class="absolute -top-12 left-1/2 -translate-x-1/2 text-on-surface-variant animate-bounce">
-<span class="font-label-lg text-label-lg">Tap to flip the card</span>
-</div>
-<div class="flashcard-inner relative w-full h-full shadow-[0px_8px_30px_rgba(0,0,0,0.12)] rounded-[32px]">
-<!-- Front Side -->
-<div class="flashcard-front absolute inset-0 bg-surface-container-lowest border-2 border-outline-variant rounded-[32px] flex flex-col items-center justify-center p-xl text-center">
-<span class="text-primary font-label-lg uppercase tracking-widest mb-lg">Question</span>
-<h2 class="font-display-md text-display-md text-on-surface leading-tight">What is the capital city of France?</h2>
-<div class="mt-xl">
-<img alt="Map of France" class="w-48 h-32 object-cover rounded-xl shadow-sm border border-outline-variant" data-alt="A clean, minimalist educational map of France highlighted in a soft orange color against a crisp white background. The map features elegant, thin borders and is presented in a modern, light-mode aesthetic consistent with a high-end educational application. The overall mood is professional, clear, and encouraging for a learning environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDQOFOGqZ3q1BftHU7iNHuJKHkPYwmpaZcLCvQdPY84_lcBAQ2EjG-2SYT6umR-Dxq2ulh6jSfMNU9GnZHbQgdYgIIHp4zQCgPQLd9YFJU84ejrMhIrFKVHBFLeHOiNsbOUygaLhPHMyCspbdBVA4Lv_-RKo2kuBACzDy2VmUsFYt66WfKUUtepHWtgSZ3_mxNFy05nH9HO9uQcIwBbmlTydokp7OZW5zeOyO7OY15PM40zHgA6UjuPoOtbZRbIHvMPcVMqnA0Joo"/>
-</div>
-</div>
-<!-- Back Side -->
-<div class="flashcard-back absolute inset-0 bg-surface-container-low border-2 border-primary rounded-[32px] flex flex-col items-center justify-center p-xl text-center">
-<span class="text-primary font-label-lg uppercase tracking-widest mb-lg">Answer</span>
-<h2 class="font-display-lg text-display-lg text-primary font-bold leading-tight">Paris</h2>
-<p class="mt-lg font-body-lg text-on-surface-variant max-w-md">Known as the 'City of Light', Paris is the most populous city in France and a global center for art, fashion, and gastronomy.</p>
-</div>
-</div>
-</div>
-<!-- Action Controls -->
-<div class="mt-8 flex gap-md w-full max-w-md justify-center"> <button class="flex-1 max-w-[180px] flex items-center justify-center gap-2 bg-surface-container-highest hover:bg-error-container text-on-surface-variant hover:text-on-error-container font-bold text-title-md py-2.5 rounded-xl border-2 border-transparent transition-all active:scale-95 group">
-        <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform" data-icon="close">close</span>
-        Still Learning
-    </button>
 
-    <button class="flex-1 max-w-[180px] flex items-center justify-center gap-2 bg-primary text-on-primary font-bold text-title-md py-2.5 rounded-xl border-2 border-primary-container shadow-md hover:shadow-xl transition-all active:scale-95 group">
-        <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform" data-icon="check">check</span>
-        Got It
-    </button>
-</div>
-<!-- Progress Footer (Bottom Bar Implementation) -->
-<div class="fixed bottom-0 left-0 w-full z-50 px-4 pb-safe pt-4 bg-surface-container/90 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)]">
-<div class="max-w-4xl mx-auto mb-4">
-<div class="flex justify-between items-center mb-2">
-<span class="font-label-lg text-label-lg text-on-surface-variant">Progress: 14 / 20 Cards</span>
-<span class="font-label-lg text-label-lg text-primary font-bold">70%</span>
-</div>
-<div class="w-full bg-surface-container-highest h-3 rounded-full overflow-hidden">
-<div class="bg-primary h-full rounded-full transition-all duration-500 shadow-sm" style="width: 70%"></div>
-</div>
-</div>
-<!-- Bottom Navigation Shared Shell (Icons Only on Mobile) -->
-<div class="flex justify-around items-center md:hidden border-t border-outline-variant pt-2">
-<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform hover:-translate-y-1">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-<span class="font-label-lg text-label-lg">Progress</span>
-</div>
-<div class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 mb-2 shadow-md">
-<span class="material-symbols-outlined" data-icon="shuffle">shuffle</span>
-</div>
-<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform hover:-translate-y-1">
-<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
-<span class="font-label-lg text-label-lg">Back</span>
-</div>
-<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform hover:-translate-y-1">
-<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
-<span class="font-label-lg text-label-lg">Flip</span>
-</div>
-</div>
-</div>
-</main>
-<!-- Results Overlay (Hidden by Default/Displayed for Demo Logic) -->
-<!-- Remove 'hidden' to see the ring -->
-<div class="hidden fixed inset-0 z-[60] bg-on-surface/40 backdrop-blur-sm flex items-center justify-center p-margin-mobile">
-<div class="bg-surface-container-lowest rounded-[40px] p-xl w-full max-w-md shadow-2xl flex flex-col items-center text-center border-4 border-primary">
-<h3 class="font-headline-lg text-headline-lg text-primary mb-lg">Study Session Complete!</h3>
-<div class="relative w-48 h-48 mb-xl">
-<svg class="w-full h-full transform -rotate-90">
-<circle class="text-surface-container-highest" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="12"></circle>
-<circle class="text-primary transition-all duration-1000 ease-out" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-dasharray="552.92" stroke-dashoffset="82.94" stroke-width="12"></circle>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center">
-<span class="font-display-lg text-display-lg text-on-surface">85%</span>
-<span class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-widest">Mastery</span>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-md w-full mb-xl">
-<div class="bg-surface-container-low p-md rounded-2xl border border-outline-variant">
-<span class="block text-headline-md font-bold text-primary">17</span>
-<span class="text-label-sm text-on-surface-variant">Cards Known</span>
-</div>
-<div class="bg-surface-container-low p-md rounded-2xl border border-outline-variant">
-<span class="block text-headline-md font-bold text-on-surface-variant">3</span>
-<span class="text-label-sm text-on-surface-variant">Need Review</span>
-</div>
-</div>
-<button class="w-full bg-primary text-on-primary font-headline-md text-headline-md py-md rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all">
-                Review My Deck
-            </button>
-<button class="w-full mt-md text-primary font-headline-md text-headline-md py-base hover:bg-surface-container-high rounded-xl transition-all">
-                Finish Session
-            </button>
-</div>
-</div>
-</body></html>
+<body>
+  <header class="ff-topbar">
+    <a href="index.html" class="ff-brand">
+      <span class="material-symbols-outlined">school</span>
+      <span>Flip Flash</span>
+    </a>
+
+    <div></div>
+
+    <div class="ff-top-actions">
+      <a class="ff-icon-btn" href="manage-account.html">
+        <span class="material-symbols-outlined">account_circle</span>
+      </a>
+    </div>
+  </header>
+
+  <aside class="ff-sidebar">
+    <div class="ff-user">
+      <img class="ff-avatar" src="https://ui-avatars.com/api/?name=Flip+Flash&background=ffdbc8&color=994700" alt="User"/>
+      <div>
+        <p id="userName" class="ff-user-name">Scholar</p>
+        <p id="userLevel" class="ff-user-level">Level 1 Scholar</p>
+      </div>
+    </div>
+
+    <nav class="ff-nav">
+      <a href="index.html">
+        <span class="material-symbols-outlined">home</span>
+        Home
+      </a>
+      <a href="decks.html" class="active">
+        <span class="material-symbols-outlined">library_books</span>
+        My Decks
+      </a>
+      <a href="recent.html">
+        <span class="material-symbols-outlined">history</span>
+        Recent
+      </a>
+      <a href="achievements.html">
+        <span class="material-symbols-outlined">workspace_premium</span>
+        Achievements
+      </a>
+    </nav>
+
+    <div class="ff-sidebar-bottom ff-nav">
+      <a href="manage-account.html">
+        <span class="material-symbols-outlined">settings</span>
+        Settings
+      </a>
+      <button id="logoutBtn" type="button">
+        <span class="material-symbols-outlined">logout</span>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <main class="ff-main">
+    <div class="ff-container" style="max-width:880px;">
+      <section class="ff-page-header">
+        <div>
+          <p class="ff-kicker">Study Mode</p>
+          <h1 class="ff-title">Flashcard Session</h1>
+        </div>
+
+        <p id="studyProgress" class="ff-btn ff-btn-soft">0/0</p>
+      </section>
+
+      <section id="studyArea">
+        <div class="ff-card" style="min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+          <h2 id="studyQuestion" class="ff-title" style="font-size:30px;">Loading...</h2>
+
+          <img id="studyImage" class="hidden" style="max-height:260px;max-width:100%;border-radius:18px;margin:20px auto;" alt="Study image"/>
+
+          <p id="studyAnswer" class="ff-subtitle">
+            Nhấn Show Answer để xem đáp án
+          </p>
+        </div>
+
+        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px;">
+          <button id="showAnswerBtn" class="ff-btn ff-btn-primary" type="button">
+            Show Answer
+          </button>
+          <button id="incorrectBtn" class="ff-btn ff-btn-danger hidden" type="button">
+            Incorrect
+          </button>
+          <button id="correctBtn" class="ff-btn ff-btn-success hidden" type="button">
+            Correct
+          </button>
+          <button id="finishStudyBtn" class="ff-btn ff-btn-soft" type="button">
+            Finish
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <nav class="ff-mobile-nav">
+    <a href="index.html">
+      <span class="material-symbols-outlined">home</span>
+      Home
+    </a>
+    <a href="decks.html" class="active">
+      <span class="material-symbols-outlined">library_books</span>
+      Decks
+    </a>
+    <a href="recent.html">
+      <span class="material-symbols-outlined">history</span>
+      Recent
+    </a>
+    <a href="manage-account.html">
+      <span class="material-symbols-outlined">person</span>
+      Profile
+    </a>
+  </nav>
+
+  <div id="authModal" class="ff-modal hidden">
+    <div class="ff-modal-panel ff-modal-wide">
+      <div class="ff-modal-head">
+        <div>
+          <h3>Welcome to Flip Flash</h3>
+          <p>Sign in or create an account to continue.</p>
+        </div>
+      </div>
+
+      <div class="ff-grid-2">
+        <form id="loginForm">
+          <h3>Sign In</h3>
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="loginEmail" type="email" required/>
+          </div>
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="loginPassword" type="password" required/>
+          </div>
+          <button class="ff-btn ff-btn-primary" type="submit" style="width:100%;">
+            Sign In
+          </button>
+        </form>
+
+        <form id="signupForm">
+          <h3>Create Account</h3>
+          <div class="ff-field">
+            <label>Username</label>
+            <input id="signupUsername" type="text"/>
+          </div>
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="signupEmail" type="email" required/>
+          </div>
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="signupPassword" type="password" required/>
+          </div>
+          <button class="ff-btn ff-btn-tonal" type="submit" style="width:100%;">
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/supabase-config.js"></script>
+  <script src="./js/app-supabase.js"></script>
+</body>
+</html>

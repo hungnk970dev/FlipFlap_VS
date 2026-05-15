@@ -1,403 +1,164 @@
 <!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Achievements - Flip Flash</title>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Achievements - Flip Flash</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface-container-low": "#fff1ea",
-                      "on-tertiary-fixed-variant": "#004b73",
-                      "primary-fixed-dim": "#ffb68a",
-                      "on-secondary": "#ffffff",
-                      "on-primary-fixed": "#321300",
-                      "on-secondary-container": "#656464",
-                      "tertiary-fixed": "#cce5ff",
-                      "surface-variant": "#f5ded2",
-                      "surface-container": "#ffeadf",
-                      "on-primary": "#ffffff",
-                      "on-primary-fixed-variant": "#743500",
-                      "on-background": "#251912",
-                      "secondary-container": "#e5e2e1",
-                      "on-secondary-fixed-variant": "#474646",
-                      "surface-container-highest": "#f5ded2",
-                      "tertiary": "#006397",
-                      "secondary": "#5f5e5e",
-                      "primary-fixed": "#ffdbc8",
-                      "surface-tint": "#994700",
-                      "on-surface": "#251912",
-                      "on-tertiary-container": "#003b5c",
-                      "error": "#ba1a1a",
-                      "inverse-surface": "#3b2d26",
-                      "outline-variant": "#e0c0af",
-                      "on-error": "#ffffff",
-                      "secondary-fixed": "#e5e2e1",
-                      "primary-container": "#ff7b00",
-                      "surface": "#fff8f5",
-                      "background": "#fff8f5",
-                      "secondary-fixed-dim": "#c8c6c5",
-                      "error-container": "#ffdad6",
-                      "surface-bright": "#fff8f5",
-                      "on-tertiary": "#ffffff",
-                      "surface-container-high": "#fbe4d7",
-                      "surface-container-lowest": "#ffffff",
-                      "outline": "#8c7263",
-                      "on-secondary-fixed": "#1c1b1b",
-                      "on-error-container": "#93000a",
-                      "on-primary-container": "#5d2900",
-                      "primary": "#994700",
-                      "surface-dim": "#edd5ca",
-                      "inverse-primary": "#ffb68a",
-                      "tertiary-fixed-dim": "#92ccff",
-                      "tertiary-container": "#00a9fd",
-                      "on-tertiary-fixed": "#001d31",
-                      "on-surface-variant": "#584235",
-                      "inverse-on-surface": "#ffede5"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "xs": "4px",
-                      "md": "16px",
-                      "lg": "24px",
-                      "margin-desktop": "32px",
-                      "xl": "48px",
-                      "base": "8px",
-                      "margin-mobile": "16px",
-                      "sm": "8px",
-                      "gutter": "16px"
-              },
-              "fontFamily": {
-                      "headline-md": ["Montserrat"],
-                      "headline-lg": ["Montserrat"],
-                      "body-md": ["Montserrat"],
-                      "display-lg": ["Montserrat"],
-                      "body-lg": ["Montserrat"],
-                      "label-sm": ["Montserrat"],
-                      "label-lg": ["Montserrat"],
-                      "headline-lg-mobile": ["Montserrat"]
-              },
-              "fontSize": {
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
-                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
-              }
-            },
-          },
-        }
-    </script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .achievement-card {
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .achievement-card:hover {
-            transform: translateY(-4px);
-        }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-        }
-    </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./js/supabase-config.js"></script>
-    <script src="./js/app-supabase.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/flipflash-ui.css"/>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen">
-<!-- TopAppBar -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant shadow-sm flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base">
-<div class="flex items-center gap-sm">
-<span class="font-display-lg text-headline-lg font-bold text-primary">Flip Flash</span>
-</div>
-<div class="hidden md:flex items-center bg-surface-container rounded-full px-md py-xs w-96">
-<span class="material-symbols-outlined text-on-surface-variant mr-sm" data-icon="search">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-md w-full placeholder:text-on-surface-variant" placeholder="Search achievements..." type="text"/>
-</div>
-<div class="flex items-center gap-md">
-<button class="p-xs rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-150 ease-in-out text-primary">
-<span class="material-symbols-outlined" data-icon="contrast">contrast</span>
-</button>
-<button class="p-xs rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-150 ease-in-out text-primary">
-<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
-</button>
-</div>
-</header>
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-full z-40 hidden lg:flex flex-col w-64 p-md bg-surface border-r border-outline-variant">
-<div class="mt-20 mb-xl">
-<div class="flex items-center gap-md mb-lg">
-<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center">
-<span class="material-symbols-outlined text-on-primary-container" data-icon="school">school</span>
-</div>
-<div>
-<h3 class="font-headline-md text-body-md font-bold text-primary">Study Session</h3>
-<p class="text-label-sm text-on-surface-variant">Level 12 Scholar</p>
-</div>
-</div>
-<button class="w-full py-md bg-primary-container text-on-primary-container font-bold rounded-xl mb-xl hover:bg-primary transition-all active:translate-x-1 duration-200">
-                Create New Deck
-            </button>
-<nav class="flex flex-col gap-xs">
-<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-body-md">Home</span>
-</a>
-<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
-<span class="font-body-md">My Decks</span>
-</a>
-<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="history">history</span>
-<span class="font-body-md">Recent</span>
-</a>
-<a class="flex items-center gap-md p-md bg-primary-container text-on-primary-container font-bold rounded-xl active:translate-x-1 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
-<span class="font-body-md">Achievements</span>
-</a>
-</nav>
-</div>
-<div class="mt-auto flex flex-col gap-xs">
-<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-<span class="font-body-md">Settings</span>
-</a>
-<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined" data-icon="help">help</span>
-<span class="font-body-md">Help</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Canvas -->
-<main class="lg:ml-64 pt-24 pb-32 lg:pb-md px-margin-mobile md:px-margin-desktop min-h-screen">
-<div class="max-w-[1200px] mx-auto">
-<!-- Hero Header -->
-<section class="mb-xl flex flex-col md:flex-row md:items-end justify-between gap-md">
-<div>
-<h1 class="font-display-lg text-headline-lg text-primary mb-xs">Your Legacy</h1>
-<p class="text-body-lg text-on-surface-variant">Celebrate your milestones and keep the momentum going!</p>
-</div>
-<div class="flex items-center gap-sm bg-surface-container-high p-sm px-md rounded-full shadow-sm">
-<span class="material-symbols-outlined text-primary" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
-<span class="font-headline-md text-primary">2,450 XP</span>
-</div>
-</section>
-<!-- Stats Overview - Bento Grid -->
-<section class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
-<!-- Mastered Cards -->
-<div class="bg-surface-container-low border border-outline-variant rounded-[2rem] p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col justify-between achievement-card">
-<div class="flex justify-between items-start">
-<div class="p-md bg-primary-container rounded-2xl">
-<span class="material-symbols-outlined text-on-primary-container text-headline-md" data-icon="task_alt">task_alt</span>
-</div>
-<span class="text-primary font-bold">+12% this week</span>
-</div>
-<div class="mt-xl">
-<p class="text-on-surface-variant font-label-lg uppercase tracking-wider">Total Cards Mastered</p>
-<h2 class="text-display-lg font-display-lg text-on-surface">1,284</h2>
-</div>
-</div>
-<!-- Day Streak -->
-<div class="bg-primary-container text-on-primary-container border border-primary rounded-[2rem] p-lg shadow-lg achievement-card relative overflow-hidden">
-<div class="relative z-10">
-<div class="flex justify-between items-start">
-<div class="p-md bg-on-primary-container rounded-2xl">
-<span class="material-symbols-outlined text-primary-container text-headline-md" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
-</div>
-</div>
-<div class="mt-xl">
-<p class="font-label-lg uppercase tracking-wider opacity-80">Current Day Streak</p>
-<h2 class="text-display-lg font-display-lg">15 Days</h2>
-</div>
-</div>
-<!-- Decorative element -->
-<span class="material-symbols-outlined absolute -bottom-10 -right-10 text-[200px] opacity-10" data-icon="trending_up">trending_up</span>
-</div>
-<!-- Total Hours -->
-<div class="bg-surface-container-low border border-outline-variant rounded-[2rem] p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col justify-between achievement-card">
-<div class="flex justify-between items-start">
-<div class="p-md bg-tertiary-container rounded-2xl">
-<span class="material-symbols-outlined text-on-tertiary-container text-headline-md" data-icon="schedule">schedule</span>
-</div>
-</div>
-<div class="mt-xl">
-<p class="text-on-surface-variant font-label-lg uppercase tracking-wider">Total Study Hours</p>
-<h2 class="text-display-lg font-display-lg text-on-surface">42.5h</h2>
-</div>
-</div>
-</section>
-<!-- Achievement Badges Grid -->
-<section>
-<div class="flex items-center justify-between mb-lg">
-<h2 class="font-headline-lg text-on-surface">Unlocked Badges</h2>
-<div class="flex gap-sm">
-<span class="px-md py-xs bg-surface-container-highest rounded-full text-label-sm text-on-surface">8 / 24 Earned</span>
-</div>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-lg">
-<!-- Unlocked Badge: Early Bird -->
-<div class="bg-surface-container border border-outline-variant rounded-xl p-lg shadow-[0px_8px_30px_rgba(0,0,0,0.12)] achievement-card flex flex-col items-center text-center">
-<div class="w-20 h-20 bg-primary-container rounded-full flex items-center justify-center mb-md shadow-md ring-4 ring-primary-fixed">
-<span class="material-symbols-outlined text-on-primary-container text-[40px]" data-icon="wb_sunny" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
-</div>
-<h3 class="font-headline-md text-on-surface mb-xs">Early Bird</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Study for 5 consecutive days before 8:00 AM.</p>
-<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full w-full"></div>
-</div>
-<p class="mt-xs text-label-sm text-primary font-bold">COMPLETED</p>
-</div>
-<!-- Unlocked Badge: Consistency King -->
-<div class="bg-surface-container border border-outline-variant rounded-xl p-lg shadow-[0px_8px_30px_rgba(0,0,0,0.12)] achievement-card flex flex-col items-center text-center">
-<div class="w-20 h-20 bg-primary-container rounded-full flex items-center justify-center mb-md shadow-md ring-4 ring-primary-fixed">
-<span class="material-symbols-outlined text-on-primary-container text-[40px]" data-icon="crown" style="font-variation-settings: 'FILL' 1;">crown</span>
-</div>
-<h3 class="font-headline-md text-on-surface mb-xs">Consistency King</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Maintain a 14-day study streak.</p>
-<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full w-full"></div>
-</div>
-<p class="mt-xs text-label-sm text-primary font-bold">COMPLETED</p>
-</div>
-<!-- Unlocked Badge: Deck Master -->
-<div class="bg-surface-container border border-outline-variant rounded-xl p-lg shadow-[0px_8px_30px_rgba(0,0,0,0.12)] achievement-card flex flex-col items-center text-center">
-<div class="w-20 h-20 bg-primary-container rounded-full flex items-center justify-center mb-md shadow-md ring-4 ring-primary-fixed">
-<span class="material-symbols-outlined text-on-primary-container text-[40px]" data-icon="style" style="font-variation-settings: 'FILL' 1;">style</span>
-</div>
-<h3 class="font-headline-md text-on-surface mb-xs">Deck Master</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Create 10 different flashcard decks.</p>
-<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full w-full"></div>
-</div>
-<p class="mt-xs text-label-sm text-primary font-bold">COMPLETED</p>
-</div>
-<!-- Locked Badge: Marathon Learner -->
-<div class="bg-surface-dim/40 border border-outline-variant rounded-xl p-lg achievement-card flex flex-col items-center text-center grayscale opacity-80 border-dashed">
-<div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center mb-md relative">
-<span class="material-symbols-outlined text-on-secondary-container text-[40px]" data-icon="timer">timer</span>
-<div class="absolute -top-1 -right-1 bg-on-surface text-surface rounded-full w-8 h-8 flex items-center justify-center ring-2 ring-surface">
-<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
-</div>
-</div>
-<h3 class="font-headline-md text-on-surface-variant mb-xs">Marathoner</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Complete a 3-hour study session in one sitting.</p>
-<div class="w-full bg-secondary-fixed-dim h-2 rounded-full overflow-hidden">
-<div class="bg-secondary-container h-full w-1/4"></div>
-</div>
-<p class="mt-xs text-label-sm text-on-surface-variant">45 / 180 min</p>
-</div>
-<!-- Locked Badge: Social Scholar -->
-<div class="bg-surface-dim/40 border border-outline-variant rounded-xl p-lg achievement-card flex flex-col items-center text-center grayscale opacity-80 border-dashed">
-<div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center mb-md relative">
-<span class="material-symbols-outlined text-on-secondary-container text-[40px]" data-icon="groups">groups</span>
-<div class="absolute -top-1 -right-1 bg-on-surface text-surface rounded-full w-8 h-8 flex items-center justify-center ring-2 ring-surface">
-<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
-</div>
-</div>
-<h3 class="font-headline-md text-on-surface-variant mb-xs">Social Scholar</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Share 5 decks with the community.</p>
-<div class="w-full bg-secondary-fixed-dim h-2 rounded-full overflow-hidden">
-<div class="bg-secondary-container h-full w-3/5"></div>
-</div>
-<p class="mt-xs text-label-sm text-on-surface-variant">3 / 5 Shared</p>
-</div>
-<!-- Locked Badge: Night Owl -->
-<div class="bg-surface-dim/40 border border-outline-variant rounded-xl p-lg achievement-card flex flex-col items-center text-center grayscale opacity-80 border-dashed">
-<div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center mb-md relative">
-<span class="material-symbols-outlined text-on-secondary-container text-[40px]" data-icon="dark_mode">dark_mode</span>
-<div class="absolute -top-1 -right-1 bg-on-surface text-surface rounded-full w-8 h-8 flex items-center justify-center ring-2 ring-surface">
-<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
-</div>
-</div>
-<h3 class="font-headline-md text-on-surface-variant mb-xs">Night Owl</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Complete 100 cards after midnight.</p>
-<div class="w-full bg-secondary-fixed-dim h-2 rounded-full overflow-hidden">
-<div class="bg-secondary-container h-full w-1/12"></div>
-</div>
-<p class="mt-xs text-label-sm text-on-surface-variant">8 / 100 cards</p>
-</div>
-<!-- Locked Badge: Polyglot -->
-<div class="bg-surface-dim/40 border border-outline-variant rounded-xl p-lg achievement-card flex flex-col items-center text-center grayscale opacity-80 border-dashed">
-<div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center mb-md relative">
-<span class="material-symbols-outlined text-on-secondary-container text-[40px]" data-icon="translate">translate</span>
-<div class="absolute -top-1 -right-1 bg-on-surface text-surface rounded-full w-8 h-8 flex items-center justify-center ring-2 ring-surface">
-<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
-</div>
-</div>
-<h3 class="font-headline-md text-on-surface-variant mb-xs">Polyglot</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Study 3 different language decks.</p>
-<div class="w-full bg-secondary-fixed-dim h-2 rounded-full overflow-hidden">
-<div class="bg-secondary-container h-full w-2/3"></div>
-</div>
-<p class="mt-xs text-label-sm text-on-surface-variant">2 / 3 Decks</p>
-</div>
-<!-- Locked Badge: Perfectionist -->
-<div class="bg-surface-dim/40 border border-outline-variant rounded-xl p-lg achievement-card flex flex-col items-center text-center grayscale opacity-80 border-dashed">
-<div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center mb-md relative">
-<span class="material-symbols-outlined text-on-secondary-container text-[40px]" data-icon="verified">verified</span>
-<div class="absolute -top-1 -right-1 bg-on-surface text-surface rounded-full w-8 h-8 flex items-center justify-center ring-2 ring-surface">
-<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
-</div>
-</div>
-<h3 class="font-headline-md text-on-surface-variant mb-xs">Perfectionist</h3>
-<p class="text-body-md text-on-surface-variant mb-md leading-snug">Get 100% on a deck with at least 50 cards.</p>
-<div class="w-full bg-secondary-fixed-dim h-2 rounded-full overflow-hidden">
-<div class="bg-secondary-container h-full w-0"></div>
-</div>
-<p class="mt-xs text-label-sm text-on-surface-variant">Not started</p>
-</div>
-</div>
-</section>
-<!-- Encouragement Section -->
-<section class="mt-xl p-xl bg-surface-container-high rounded-[2rem] border border-outline-variant flex flex-col md:flex-row items-center gap-xl">
-<div class="w-48 h-48 rounded-2xl overflow-hidden shrink-0 shadow-lg">
-<img class="w-full h-full object-cover" data-alt="A bright and vibrant workspace featuring a tablet with a colorful flashcard app, a warm cup of coffee, and some scattered notebooks. The lighting is soft and golden, creating an encouraging and productive morning atmosphere for learning." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY3aDwVo2ZrOeiGl0soRFNl-pbjdwMdKvfemCkOJ7y1slu4fMy-0-HsXcXUqDp5jz7d3iWQn4-fDtMkZqBue5IUeZoaO6X9mIfOAz1yVizZnaEh5oJ_bd3P1lFLTYspZIRbJVXqJGeouZhyUTQ4t-_gGy3_TZ4P_AeqMRpAtCXfCFn_tFV8pwdN57H3Lr1me7ck-PkTh-cmjg1Siv5GTc6mBDgobkT7eJ9P4Hfu_H_DQR2JDwEn4izvdd0h7YoHF-Yqk8VQSy_fuA"/>
-</div>
-<div>
-<h2 class="font-headline-lg text-primary mb-md">Keep Pushing, Scholar!</h2>
-<p class="text-body-lg text-on-surface-variant mb-lg">You've mastered over 1,200 cards this month. You're just 2 decks away from the "Polyglot" badge. Your consistency is your superpower—don't break that 15-day streak today!</p>
-<button class="px-xl py-md bg-primary text-on-primary font-bold rounded-xl shadow-md hover:translate-y-[-2px] transition-transform active:scale-95">
-                        Start Study Session
-                    </button>
-</div>
-</section>
-</div>
-</main>
-<!-- BottomNavBar (Mobile Only) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 bg-surface-container/90 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl">
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1 py-2" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-label-lg text-label-lg">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 mb-2 shadow-md" href="#">
-<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1 py-2" href="#">
-<span class="material-symbols-outlined" data-icon="shuffle">shuffle</span>
-<span class="font-label-lg text-label-lg">Shuffle</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1 py-2" href="#">
-<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
-<span class="font-label-lg text-label-lg">Flip</span>
-</a>
-</nav>
-</body></html>
+
+<body>
+  <header class="ff-topbar">
+    <a href="index.html" class="ff-brand">
+      <span class="material-symbols-outlined">school</span>
+      <span>Flip Flash</span>
+    </a>
+
+    <div class="ff-search">
+      <span class="material-symbols-outlined">search</span>
+      <input placeholder="Search achievements..." type="text"/>
+    </div>
+
+    <div class="ff-top-actions">
+      <button data-theme-toggle class="ff-icon-btn" type="button">
+        <span class="material-symbols-outlined" data-icon="contrast">contrast</span>
+      </button>
+      <a class="ff-icon-btn" href="manage-account.html">
+        <span class="material-symbols-outlined">account_circle</span>
+      </a>
+    </div>
+  </header>
+
+  <aside class="ff-sidebar">
+    <div class="ff-user">
+      <img class="ff-avatar" src="https://ui-avatars.com/api/?name=Flip+Flash&background=ffdbc8&color=994700" alt="User"/>
+      <div>
+        <p id="userName" class="ff-user-name">Scholar</p>
+        <p id="userLevel" class="ff-user-level">Level 1 Scholar</p>
+      </div>
+    </div>
+
+    <nav class="ff-nav">
+      <a href="index.html">
+        <span class="material-symbols-outlined">home</span>
+        Home
+      </a>
+      <a href="decks.html">
+        <span class="material-symbols-outlined">library_books</span>
+        My Decks
+      </a>
+      <a href="recent.html">
+        <span class="material-symbols-outlined">history</span>
+        Recent
+      </a>
+      <a href="achievements.html" class="active">
+        <span class="material-symbols-outlined">workspace_premium</span>
+        Achievements
+      </a>
+    </nav>
+
+    <div class="ff-sidebar-bottom ff-nav">
+      <a href="manage-account.html">
+        <span class="material-symbols-outlined">settings</span>
+        Settings
+      </a>
+      <button id="logoutBtn" type="button">
+        <span class="material-symbols-outlined">logout</span>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <main class="ff-main">
+    <div class="ff-container">
+      <section class="ff-page-header">
+        <div>
+          <p class="ff-kicker">Progress</p>
+          <h1 class="ff-title">Achievements</h1>
+          <p class="ff-subtitle">Track your milestones and badges.</p>
+        </div>
+      </section>
+
+      <section id="achievementsGrid" class="ff-grid"></section>
+    </div>
+  </main>
+
+  <nav class="ff-mobile-nav">
+    <a href="index.html">
+      <span class="material-symbols-outlined">home</span>
+      Home
+    </a>
+    <a href="decks.html">
+      <span class="material-symbols-outlined">library_books</span>
+      Decks
+    </a>
+    <a href="recent.html">
+      <span class="material-symbols-outlined">history</span>
+      Recent
+    </a>
+    <a href="achievements.html" class="active">
+      <span class="material-symbols-outlined">workspace_premium</span>
+      Badges
+    </a>
+    <a href="manage-account.html">
+      <span class="material-symbols-outlined">person</span>
+      Profile
+    </a>
+  </nav>
+
+  <div id="authModal" class="ff-modal hidden">
+    <div class="ff-modal-panel ff-modal-wide">
+      <div class="ff-modal-head">
+        <div>
+          <h3>Welcome to Flip Flash</h3>
+          <p>Sign in or create an account to continue.</p>
+        </div>
+      </div>
+
+      <div class="ff-grid-2">
+        <form id="loginForm">
+          <h3>Sign In</h3>
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="loginEmail" type="email" required/>
+          </div>
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="loginPassword" type="password" required/>
+          </div>
+          <button class="ff-btn ff-btn-primary" type="submit" style="width:100%;">
+            Sign In
+          </button>
+        </form>
+
+        <form id="signupForm">
+          <h3>Create Account</h3>
+          <div class="ff-field">
+            <label>Username</label>
+            <input id="signupUsername" type="text"/>
+          </div>
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="signupEmail" type="email" required/>
+          </div>
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="signupPassword" type="password" required/>
+          </div>
+          <button class="ff-btn ff-btn-tonal" type="submit" style="width:100%;">
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/supabase-config.js"></script>
+  <script src="./js/app-supabase.js"></script>
+</body>
+</html>

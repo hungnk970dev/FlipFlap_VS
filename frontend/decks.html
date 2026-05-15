@@ -3,691 +3,191 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-
   <title>All Decks - Flip Flash</title>
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-
-  <!-- Tailwind Config - lấy theo index.html -->
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          "colors": {
-            "secondary-fixed-dim": "#c8c6c5",
-            "on-primary-fixed": "#321300",
-            "on-error-container": "#93000a",
-            "tertiary": "#006397",
-            "on-secondary": "#ffffff",
-            "on-error": "#ffffff",
-            "surface-container-high": "#fbe4d7",
-            "outline": "#8c7263",
-            "on-secondary-container": "#656464",
-            "error-container": "#ffdad6",
-            "surface-tint": "#994700",
-            "on-tertiary": "#ffffff",
-            "tertiary-container": "#00a9fd",
-            "on-primary-fixed-variant": "#743500",
-            "surface": "#fff8f5",
-            "surface-variant": "#f5ded2",
-            "primary-container": "#ff7b00",
-            "surface-container": "#ffeadf",
-            "surface-container-low": "#fff1ea",
-            "error": "#ba1a1a",
-            "secondary": "#5f5e5e",
-            "tertiary-fixed-dim": "#92ccff",
-            "on-secondary-fixed-variant": "#474646",
-            "secondary-container": "#e5e2e1",
-            "on-surface-variant": "#584235",
-            "primary-fixed": "#ffdbc8",
-            "primary-fixed-dim": "#ffb68a",
-            "surface-container-lowest": "#ffffff",
-            "on-primary-container": "#5d2900",
-            "surface-dim": "#edd5ca",
-            "on-surface": "#251912",
-            "on-tertiary-container": "#003b5c",
-            "on-secondary-fixed": "#1c1b1b",
-            "inverse-primary": "#ffb68a",
-            "on-primary": "#ffffff",
-            "on-tertiary-fixed-variant": "#004b73",
-            "surface-bright": "#fff8f5",
-            "inverse-on-surface": "#ffede5",
-            "on-background": "#251912",
-            "background": "#fff8f5",
-            "primary": "#994700",
-            "tertiary-fixed": "#cce5ff",
-            "surface-container-highest": "#f5ded2",
-            "inverse-surface": "#3b2d26",
-            "on-tertiary-fixed": "#001d31",
-            "secondary-fixed": "#e5e2e1",
-            "outline-variant": "#e0c0af"
-          },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "base": "8px",
-            "gutter": "16px",
-            "xl": "48px",
-            "lg": "24px",
-            "sm": "8px",
-            "md": "16px",
-            "margin-mobile": "16px",
-            "margin-desktop": "32px",
-            "xs": "4px"
-          },
-          "fontFamily": {
-            "headline-md": ["Montserrat"],
-            "headline-lg-mobile": ["Montserrat"],
-            "display-lg": ["Montserrat"],
-            "headline-lg": ["Montserrat"],
-            "body-md": ["Montserrat"],
-            "body-lg": ["Montserrat"],
-            "label-sm": ["Montserrat"],
-            "label-lg": ["Montserrat"]
-          },
-          "fontSize": {
-            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-            "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-            "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
-            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-            "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
-            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Custom Styles - lấy theo index.html -->
-  <style>
-    body {
-      zoom: 0.9;
-    }
-
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-
-    .card-lift {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card-lift:hover {
-      transform: translateY(-4px);
-      box-shadow: 0px 8px 30px rgba(0,0,0,0.12);
-    }
-  </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="./css/flipflash-ui.css"/>
 </head>
 
-<body class="bg-surface font-body-md text-on-surface">
-
-  <!-- ==================== TOP APP BAR ==================== -->
-  <header class="bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none fixed top-0 full-width z-50 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base">
-
-    <!-- Logo -->
-    <a href="index.html" class="flex items-center gap-md">
-      <span class="material-symbols-outlined text-primary text-headline-lg">school</span>
-      <span class="font-display-lg text-headline-lg font-bold text-primary dark:text-primary-container">Flip Flash</span>
+<body>
+  <header class="ff-topbar">
+    <a href="index.html" class="ff-brand">
+      <span class="material-symbols-outlined">school</span>
+      <span>Flip Flash</span>
     </a>
 
-    <!-- Search Bar -->
-    <div class="hidden md:flex flex-1 max-w-xl mx-lg">
-      <div class="relative w-full">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-        <input
-          id="deckSearchInput"
-          class="w-full bg-surface-container border-none rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-primary text-body-md"
-          placeholder="Search your decks..."
-          type="text"
-        />
-      </div>
+    <div class="ff-search">
+      <span class="material-symbols-outlined">search</span>
+      <input id="deckSearchInput" placeholder="Search your decks..." type="text"/>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="flex items-center gap-md">
-      <button
-        data-theme-toggle
-        class="p-2 rounded-full hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 ease-in-out">
-        <span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="contrast">contrast</span>
+    <div class="ff-top-actions">
+      <button data-theme-toggle class="ff-icon-btn" type="button">
+        <span class="material-symbols-outlined" data-icon="contrast">contrast</span>
       </button>
-
-      <a
-        href="manage-account.html"
-        class="p-2 rounded-full hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 ease-in-out">
-        <span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="account_circle">account_circle</span>
+      <a class="ff-icon-btn" href="manage-account.html">
+        <span class="material-symbols-outlined">account_circle</span>
       </a>
     </div>
-
   </header>
 
-  <!-- ==================== MAIN LAYOUT ==================== -->
-  <div class="flex min-h-screen pt-20">
-
-    <!-- ==================== SIDE NAVIGATION BAR ==================== -->
-    <aside class="h-screen w-64 hidden lg:flex flex-col border-r border-outline-variant dark:border-outline bg-surface dark:bg-surface-dim fixed left-0 top-0 z-40 p-md">
-
-      <!-- User Profile Section -->
-      <div class="mt-20 mb-lg px-xs">
-        <div class="flex items-center gap-sm mb-lg">
-          <img
-            alt="User Profile"
-            class="w-10 h-10 rounded-full bg-primary-fixed"
-            src="https://ui-avatars.com/api/?name=Flip+Flash&background=ffdbc8&color=994700"
-          />
-
-          <div>
-            <p id="userName" class="font-bold text-on-surface leading-tight">Scholar</p>
-            <p id="userLevel" class="text-label-sm text-on-surface-variant">Level 1 Scholar</p>
-          </div>
-        </div>
-
-        <!-- Create Deck Button -->
-        <button
-          data-modal-open="createDeckModal"
-          class="w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-xl flex items-center justify-center gap-2 mb-lg shadow-sm hover:brightness-105 active:translate-x-1 duration-200">
-          <span class="material-symbols-outlined">add</span>
-          Create New Deck
-        </button>
-
-        <!-- Navigation Links -->
-        <nav class="space-y-sm">
-          <a
-            class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200"
-            href="index.html">
-            <span class="material-symbols-outlined" data-icon="home">home</span>
-            <span>Home</span>
-          </a>
-
-          <a
-            class="flex items-center gap-md p-md bg-primary-container dark:bg-primary-fixed text-on-primary-container font-bold rounded-xl active:translate-x-1 duration-200"
-            href="decks.html">
-            <span class="material-symbols-outlined" data-icon="library_books">library_books</span>
-            <span>My Decks</span>
-          </a>
-
-          <a
-            class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200"
-            href="recent.html">
-            <span class="material-symbols-outlined" data-icon="history">history</span>
-            <span>Recent</span>
-          </a>
-
-          <a
-            class="flex items-center gap-md p-md text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-variant dark:hover:bg-secondary-container rounded-xl transition-all active:translate-x-1 duration-200"
-            href="achievements.html">
-            <span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
-            <span>Achievements</span>
-          </a>
-        </nav>
+  <aside class="ff-sidebar">
+    <div class="ff-user">
+      <img class="ff-avatar" src="https://ui-avatars.com/api/?name=Flip+Flash&background=ffdbc8&color=994700" alt="User"/>
+      <div>
+        <p id="userName" class="ff-user-name">Scholar</p>
+        <p id="userLevel" class="ff-user-level">Level 1 Scholar</p>
       </div>
+    </div>
 
-      <!-- Bottom Links -->
-      <div class="mt-auto border-t border-outline-variant pt-md">
-        <a
-          class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all"
-          href="manage-account.html">
-          <span class="material-symbols-outlined" data-icon="settings">settings</span>
-          <span>Settings</span>
-        </a>
-
-        <button
-          id="logoutBtn"
-          class="w-full flex items-center gap-md p-md text-error hover:bg-error-container rounded-xl transition-all text-left">
-          <span class="material-symbols-outlined" data-icon="logout">logout</span>
-          <span>Logout</span>
-        </button>
-      </div>
-
-    </aside>
-
-    <!-- ==================== MAIN CONTENT ==================== -->
-    <main class="flex-1 lg:ml-64 p-margin-mobile md:p-margin-desktop bg-surface">
-      <div class="max-w-[1200px] mx-auto">
-
-        <!-- Page Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
-          <div>
-            <p class="text-label-lg text-primary font-bold uppercase tracking-wider mb-xs">
-              Library
-            </p>
-
-            <h1 class="font-display-lg text-headline-lg text-on-surface">
-              All Decks
-            </h1>
-
-            <p class="text-body-lg text-on-surface-variant">
-              Browse, manage, and open all your flashcard decks.
-            </p>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-sm">
-            <a
-              href="index.html"
-              class="px-lg py-3 rounded-full bg-surface-container text-primary font-bold hover:bg-surface-container-high transition-colors">
-              Dashboard
-            </a>
-
-            <button
-              data-modal-open="createDeckModal"
-              class="px-lg py-3 rounded-full bg-primary text-white font-bold hover:brightness-110 shadow-md transition-all flex items-center gap-sm">
-              <span class="material-symbols-outlined">add</span>
-              Create Deck
-            </button>
-          </div>
-        </div>
-
-        <!-- Summary Cards -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
-          <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
-            <p class="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold mb-sm">Total Decks</p>
-            <div class="flex items-end gap-sm">
-              <span id="totalDecks" class="text-display-lg font-display-lg text-on-surface leading-none">0</span>
-              <span class="text-on-surface-variant font-bold mb-xs text-label-lg">Decks</span>
-            </div>
-          </div>
-
-          <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
-            <p class="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold mb-sm">Total Cards</p>
-            <div class="flex items-end gap-sm">
-              <span id="totalCards" class="text-display-lg font-display-lg text-on-surface leading-none">0</span>
-              <span class="text-on-surface-variant font-bold mb-xs text-label-lg">Cards</span>
-            </div>
-          </div>
-
-          <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
-            <p class="text-label-sm text-on-surface-variant uppercase tracking-widest font-bold mb-sm">Average Mastery</p>
-            <div class="flex items-end gap-sm">
-              <span id="masteryPercentage" class="text-display-lg font-display-lg text-on-surface leading-none">0%</span>
-              <span class="text-on-surface-variant font-bold mb-xs text-label-lg">Mastered</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Deck Toolbar -->
-        <section class="bg-surface-container-low rounded-2xl border border-outline-variant/30 p-md mb-lg">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
-            <div>
-              <h2 class="font-headline-md text-headline-md text-on-surface">
-                Your Deck Library
-              </h2>
-              <p class="text-on-surface-variant">
-                Click any deck to open folders and sets.
-              </p>
-            </div>
-
-            <div class="flex items-center gap-sm">
-              <button
-                class="px-md py-sm rounded-full bg-surface-container-lowest border border-outline-variant text-on-surface-variant font-bold">
-                Sort: Newest
-              </button>
-
-              <button
-                data-modal-open="createDeckModal"
-                class="px-md py-sm rounded-full bg-primary-container text-on-primary-container font-bold">
-                New Deck
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== DECKS GRID ==================== -->
-        <!-- app-supabase.js sẽ render toàn bộ decks vào đây -->
-        <section
-          id="decksGrid"
-          data-page="all-decks"
-          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
-
-          <!-- Loading skeleton, JS sẽ xóa sau khi load -->
-          <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)] animate-pulse">
-            <div class="w-12 h-12 rounded-lg bg-surface-container-high mb-md"></div>
-            <div class="h-6 w-2/3 bg-surface-container-high rounded mb-sm"></div>
-            <div class="h-4 w-full bg-surface-container-high rounded mb-xs"></div>
-            <div class="h-4 w-3/4 bg-surface-container-high rounded"></div>
-          </div>
-
-          <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)] animate-pulse">
-            <div class="w-12 h-12 rounded-lg bg-surface-container-high mb-md"></div>
-            <div class="h-6 w-2/3 bg-surface-container-high rounded mb-sm"></div>
-            <div class="h-4 w-full bg-surface-container-high rounded mb-xs"></div>
-            <div class="h-4 w-3/4 bg-surface-container-high rounded"></div>
-          </div>
-
-          <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)] animate-pulse">
-            <div class="w-12 h-12 rounded-lg bg-surface-container-high mb-md"></div>
-            <div class="h-6 w-2/3 bg-surface-container-high rounded mb-sm"></div>
-            <div class="h-4 w-full bg-surface-container-high rounded mb-xs"></div>
-            <div class="h-4 w-3/4 bg-surface-container-high rounded"></div>
-          </div>
-
-        </section>
-
-      </div>
-    </main>
-
-  </div>
-
-  <!-- ==================== BOTTOM NAVIGATION BAR - MOBILE ==================== -->
-  <nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 bg-surface-container/90 backdrop-blur-md shadow-lg rounded-t-xl">
-    <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1" href="index.html">
-      <span class="material-symbols-outlined" data-icon="home">home</span>
-      <span class="font-label-lg text-label-lg">Home</span>
-    </a>
-
-    <a class="flex flex-col items-center justify-center text-primary transition-transform hover:-translate-y-1" href="decks.html">
-      <span class="material-symbols-outlined" data-icon="library_books">library_books</span>
-      <span class="font-label-lg text-label-lg">Decks</span>
-    </a>
-
-    <button
-      data-modal-open="createDeckModal"
-      class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 mb-2 shadow-md active:scale-90 transition-all duration-100 ease-out">
-      <span class="material-symbols-outlined" data-icon="add">add</span>
-      <span class="sr-only">Create Deck</span>
+    <button data-modal-open="createDeckModal" class="ff-btn ff-btn-tonal" style="width:100%; margin-bottom:20px;" type="button">
+      <span class="material-symbols-outlined">add</span>
+      Create New Deck
     </button>
 
-    <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1" href="recent.html">
-      <span class="material-symbols-outlined" data-icon="history">history</span>
-      <span class="font-label-lg text-label-lg">Recent</span>
-    </a>
+    <nav class="ff-nav">
+      <a href="index.html">
+        <span class="material-symbols-outlined">home</span>
+        Home
+      </a>
+      <a href="decks.html" class="active">
+        <span class="material-symbols-outlined">library_books</span>
+        My Decks
+      </a>
+      <a href="recent.html">
+        <span class="material-symbols-outlined">history</span>
+        Recent
+      </a>
+      <a href="achievements.html">
+        <span class="material-symbols-outlined">workspace_premium</span>
+        Achievements
+      </a>
+    </nav>
 
-    <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform hover:-translate-y-1" href="manage-account.html">
-      <span class="material-symbols-outlined" data-icon="person">person</span>
-      <span class="font-label-lg text-label-lg">Profile</span>
+    <div class="ff-sidebar-bottom ff-nav">
+      <a href="manage-account.html">
+        <span class="material-symbols-outlined">settings</span>
+        Settings
+      </a>
+      <button id="logoutBtn" type="button">
+        <span class="material-symbols-outlined">logout</span>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <main class="ff-main">
+    <div class="ff-container">
+      <section class="ff-page-header">
+        <div>
+          <p class="ff-kicker">Library</p>
+          <h1 class="ff-title">All Decks</h1>
+          <p class="ff-subtitle">Browse, manage, and open all your flashcard decks.</p>
+        </div>
+
+        <button data-modal-open="createDeckModal" class="ff-btn ff-btn-primary" type="button">
+          <span class="material-symbols-outlined">add</span>
+          Create Deck
+        </button>
+      </section>
+
+      <section class="ff-grid" style="margin-bottom:32px;">
+        <div class="ff-card">
+          <p class="ff-stat-label">Total Decks</p>
+          <p id="totalDecks" class="ff-stat-value">0</p>
+        </div>
+
+        <div class="ff-card">
+          <p class="ff-stat-label">Total Cards</p>
+          <p id="totalCards" class="ff-stat-value">0</p>
+        </div>
+
+        <div class="ff-card">
+          <p class="ff-stat-label">Average Mastery</p>
+          <p id="masteryPercentage" class="ff-stat-value">0%</p>
+        </div>
+      </section>
+
+      <section class="ff-toolbar">
+        <div>
+          <h2>Your Deck Library</h2>
+          <p>Click any deck to open folders and sets.</p>
+        </div>
+
+        <button data-modal-open="createDeckModal" class="ff-btn ff-btn-tonal" type="button">
+          New Deck
+        </button>
+      </section>
+
+      <section id="decksGrid" class="ff-grid"></section>
+    </div>
+  </main>
+
+  <nav class="ff-mobile-nav">
+    <a href="index.html">
+      <span class="material-symbols-outlined">home</span>
+      Home
+    </a>
+    <a href="decks.html" class="active">
+      <span class="material-symbols-outlined">library_books</span>
+      Decks
+    </a>
+    <button data-modal-open="createDeckModal" type="button">
+      <span class="material-symbols-outlined">add_circle</span>
+      New
+    </button>
+    <a href="recent.html">
+      <span class="material-symbols-outlined">history</span>
+      Recent
+    </a>
+    <a href="manage-account.html">
+      <span class="material-symbols-outlined">person</span>
+      Profile
     </a>
   </nav>
 
-  <!-- ==================== FLOATING ACTION BUTTON ==================== -->
-  <button
-    data-modal-open="createDeckModal"
-    class="fixed bottom-gutter right-gutter md:bottom-xl md:right-xl bg-primary-container text-on-primary-container w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-30 lg:hidden">
-    <span class="material-symbols-outlined text-[32px]">add</span>
-  </button>
-
-  <!-- ==================== DELETE CONFIRMATION MODAL ==================== -->
-  <div
-    id="deleteModal"
-    class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[100] flex items-center justify-center p-gutter">
-    <div class="bg-surface-container-lowest max-w-md w-full rounded-2xl p-xl shadow-2xl border border-outline-variant">
-      <h3 class="font-headline-md text-headline-md text-on-surface mb-md">
-        Delete this deck?
-      </h3>
-
-      <p
-        id="deleteModalText"
-        class="text-body-md text-on-surface-variant mb-xl">
-        This action cannot be undone.
-      </p>
-
-      <div class="flex justify-end gap-md">
-        <button
-          type="button"
-          data-modal-close="deleteModal"
-          class="px-lg py-2 font-bold text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">
-          Cancel
-        </button>
-
-        <button
-          id="confirmDeleteBtn"
-          type="button"
-          class="px-lg py-2 font-bold bg-error text-on-error rounded-full hover:brightness-110 transition-all">
-          Delete Deck
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== CREATE DECK MODAL ==================== -->
-  <div
-    id="createDeckModal"
-    class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[100] flex items-center justify-center p-gutter">
-    <div class="bg-surface-container-lowest max-w-lg w-full rounded-2xl p-xl shadow-2xl border border-outline-variant flex flex-col gap-lg">
-
-      <!-- Modal Header -->
-      <div class="flex justify-between items-center">
-        <h3 class="font-headline-md text-headline-md text-on-surface">
-          Create New Deck
-        </h3>
-
-        <button
-          type="button"
-          data-modal-close="createDeckModal"
-          class="p-1 text-on-surface-variant hover:bg-surface-variant rounded-full">
-          <span class="material-symbols-outlined">close</span>
-        </button>
-      </div>
-
-      <!-- Form -->
-      <form id="createDeckForm" class="space-y-md">
-        <!-- Deck Name -->
+  <div id="authModal" class="ff-modal hidden">
+    <div class="ff-modal-panel ff-modal-wide">
+      <div class="ff-modal-head">
         <div>
-          <label for="deckName" class="block text-label-lg text-on-surface-variant mb-xs">
-            Deck Name
-          </label>
-
-          <input
-            id="deckName"
-            class="w-full bg-surface-container border-outline-variant rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary text-body-md"
-            placeholder="e.g., Organic Chemistry"
-            type="text"
-            required
-          />
-        </div>
-
-        <!-- Description -->
-        <div>
-          <label for="deckDesc" class="block text-label-lg text-on-surface-variant mb-xs">
-            Description
-          </label>
-
-          <textarea
-            id="deckDesc"
-            class="w-full bg-surface-container border-outline-variant rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary text-body-md"
-            placeholder="What is this deck about?"
-            rows="3"></textarea>
-        </div>
-
-        <!-- Hidden selected color -->
-        <input id="selectedColor" type="hidden" value="#994700"/>
-
-        <!-- Color Picker -->
-        <div>
-          <p class="text-label-lg text-on-surface-variant mb-md">
-            Choose Deck Color
-          </p>
-
-          <div class="flex flex-wrap gap-md">
-            <button
-              type="button"
-              data-color="#994700"
-              class="w-10 h-10 rounded-full bg-primary border-2 border-white shadow-sm hover:scale-110 transition-transform ring-2 ring-primary ring-offset-2">
-            </button>
-
-            <button
-              type="button"
-              data-color="#006397"
-              class="w-10 h-10 rounded-full bg-tertiary border-2 border-white shadow-sm hover:scale-110 transition-transform">
-            </button>
-
-            <button
-              type="button"
-              data-color="#5f5e5e"
-              class="w-10 h-10 rounded-full bg-secondary border-2 border-white shadow-sm hover:scale-110 transition-transform">
-            </button>
-
-            <button
-              type="button"
-              data-color="#E91E63"
-              class="w-10 h-10 rounded-full bg-[#E91E63] border-2 border-white shadow-sm hover:scale-110 transition-transform">
-            </button>
-
-            <button
-              type="button"
-              data-color="#9C27B0"
-              class="w-10 h-10 rounded-full bg-[#9C27B0] border-2 border-white shadow-sm hover:scale-110 transition-transform">
-            </button>
-
-            <button
-              type="button"
-              data-color="#4CAF50"
-              class="w-10 h-10 rounded-full bg-[#4CAF50] border-2 border-white shadow-sm hover:scale-110 transition-transform">
-            </button>
-
-            <!-- Custom Color Picker -->
-            <label class="relative w-10 h-10 cursor-pointer">
-              <input
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                type="color"
-                value="#994700"
-                onchange="document.getElementById('selectedColor').value = this.value"
-              />
-
-              <div class="w-10 h-10 rounded-full border-2 border-dashed border-outline flex items-center justify-center bg-surface-container">
-                <span class="material-symbols-outlined text-[20px] text-on-surface-variant">palette</span>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <!-- Modal Actions -->
-        <div class="flex justify-end gap-md pt-md">
-          <button
-            type="button"
-            data-modal-close="createDeckModal"
-            class="px-lg py-2.5 font-bold text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">
-            Cancel
-          </button>
-
-          <button
-            id="createDeckBtn"
-            type="submit"
-            class="px-lg py-2.5 font-bold bg-[#FF7B00] text-white rounded-full hover:brightness-110 shadow-md transition-all">
-            Create Deck
-          </button>
-        </div>
-      </form>
-
-    </div>
-  </div>
-
-  <!-- ==================== AUTH MODAL ==================== -->
-  <div
-    id="authModal"
-    class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[120] flex items-center justify-center p-gutter">
-    <div class="bg-surface-container-lowest max-w-4xl w-full rounded-2xl p-xl shadow-2xl border border-outline-variant">
-      <div class="flex items-center justify-between mb-lg">
-        <div>
-          <h3 class="font-headline-md text-headline-md text-on-surface">
-            Welcome to Flip Flash
-          </h3>
-
-          <p class="text-on-surface-variant">
-            Sign in or create an account to manage your decks.
-          </p>
+          <h3>Welcome to Flip Flash</h3>
+          <p>Sign in or create an account to continue.</p>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
-        <!-- Login -->
-        <form id="loginForm" class="space-y-md">
-          <h4 class="font-bold text-headline-md">Sign In</h4>
-
-          <div>
-            <label for="loginEmail" class="block text-label-lg text-on-surface-variant mb-xs">
-              Email
-            </label>
-
-            <input
-              id="loginEmail"
-              type="email"
-              class="w-full bg-surface-container border-outline-variant rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary text-body-md"
-              placeholder="you@example.com"
-              required
-            />
+      <div class="ff-grid-2">
+        <form id="loginForm">
+          <h3>Sign In</h3>
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="loginEmail" type="email" required/>
           </div>
-
-          <div>
-            <label for="loginPassword" class="block text-label-lg text-on-surface-variant mb-xs">
-              Password
-            </label>
-
-            <input
-              id="loginPassword"
-              type="password"
-              class="w-full bg-surface-container border-outline-variant rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary text-body-md"
-              placeholder="Your password"
-              required
-            />
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="loginPassword" type="password" required/>
           </div>
-
-          <button
-            type="submit"
-            class="w-full px-lg py-3 font-bold bg-primary text-white rounded-full hover:brightness-110 shadow-md transition-all">
+          <button class="ff-btn ff-btn-primary" type="submit" style="width:100%;">
             Sign In
           </button>
         </form>
 
-        <!-- Signup -->
-        <form id="signupForm" class="space-y-md">
-          <h4 class="font-bold text-headline-md">Create Account</h4>
-
-          <div>
-            <label for="signupUsername" class="block text-label-lg text-on-surface-variant mb-xs">
-              Username
-            </label>
-
-            <input
-              id="signupUsername"
-              type="text"
-              class="w-full bg-surface-container border-outline-variant rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary text-body-md"
-              placeholder="Scholar"
-            />
+        <form id="signupForm">
+          <h3>Create Account</h3>
+          <div class="ff-field">
+            <label>Username</label>
+            <input id="signupUsername" type="text"/>
           </div>
-
-          <div>
-            <label for="signupEmail" class="block text-label-lg text-on-surface-variant mb-xs">
-              Email
-            </label>
-
-            <input
-              id="signupEmail"
-              type="email"
-              class="w-full bg-surface-container border-outline-variant rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary text-body-md"
-              placeholder="you@example.com"
-              required
-            />
+          <div class="ff-field">
+            <label>Email</label>
+            <input id="signupEmail" type="email" required/>
           </div>
-
-          <div>
-            <label for="signupPassword" class="block text-label-lg text-on-surface-variant mb-xs">
-              Password
-            </label>
-
-            <input
-              id="signupPassword"
-              type="password"
-              class="w-full bg-surface-container border-outline-variant rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary text-body-md"
-              placeholder="At least 6 characters"
-              required
-            />
+          <div class="ff-field">
+            <label>Password</label>
+            <input id="signupPassword" type="password" required/>
           </div>
-
-          <button
-            type="submit"
-            class="w-full px-lg py-3 font-bold bg-primary-container text-on-primary-container rounded-full hover:brightness-105 shadow-md transition-all">
+          <button class="ff-btn ff-btn-tonal" type="submit" style="width:100%;">
             Create Account
           </button>
         </form>
@@ -695,9 +195,74 @@
     </div>
   </div>
 
-  <!-- ==================== SCRIPTS ==================== -->
+  <div id="createDeckModal" class="ff-modal hidden">
+    <div class="ff-modal-panel">
+      <div class="ff-modal-head">
+        <div>
+          <h3>Create New Deck</h3>
+          <p>Add a new flashcard deck.</p>
+        </div>
+        <button class="ff-icon-btn" data-modal-close="createDeckModal" type="button">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="createDeckForm">
+        <div class="ff-field">
+          <label>Deck Name</label>
+          <input id="deckName" type="text" required placeholder="e.g. English Vocabulary"/>
+        </div>
+
+        <div class="ff-field">
+          <label>Description</label>
+          <textarea id="deckDesc" placeholder="Short description"></textarea>
+        </div>
+
+        <input id="selectedColor" type="hidden" value="#994700"/>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:14px 0;">
+          <button type="button" data-color="#994700" style="width:40px;height:40px;border-radius:50%;border:0;background:#994700;"></button>
+          <button type="button" data-color="#006397" style="width:40px;height:40px;border-radius:50%;border:0;background:#006397;"></button>
+          <button type="button" data-color="#5f5e5e" style="width:40px;height:40px;border-radius:50%;border:0;background:#5f5e5e;"></button>
+          <button type="button" data-color="#E91E63" style="width:40px;height:40px;border-radius:50%;border:0;background:#E91E63;"></button>
+          <button type="button" data-color="#9C27B0" style="width:40px;height:40px;border-radius:50%;border:0;background:#9C27B0;"></button>
+          <button type="button" data-color="#4CAF50" style="width:40px;height:40px;border-radius:50%;border:0;background:#4CAF50;"></button>
+        </div>
+
+        <div class="ff-actions">
+          <button type="button" data-modal-close="createDeckModal" class="ff-btn ff-btn-soft">
+            Cancel
+          </button>
+          <button id="createDeckBtn" type="submit" class="ff-btn ff-btn-primary">
+            Create Deck
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="deleteModal" class="ff-modal hidden">
+    <div class="ff-modal-panel">
+      <div class="ff-modal-head">
+        <div>
+          <h3>Delete this deck?</h3>
+          <p id="deleteModalText">This action cannot be undone.</p>
+        </div>
+      </div>
+
+      <div class="ff-actions">
+        <button type="button" data-modal-close="deleteModal" class="ff-btn ff-btn-soft">
+          Cancel
+        </button>
+        <button id="confirmDeleteBtn" type="button" class="ff-btn ff-btn-danger">
+          Delete Deck
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./js/supabase-config.js"></script>
   <script src="./js/app-supabase.js"></script>
-
 </body>
 </html>
