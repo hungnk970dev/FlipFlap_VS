@@ -664,20 +664,20 @@ function renderDecks(decks, options = {}) {
 
   if (!decks.length) {
     const empty = document.createElement("div");
+    empty.className = "ff-card";
 
-    empty.className =
-      "col-span-full bg-surface-container-lowest border border-outline-variant rounded-xl p-lg";
+    empty.style.gridColumn = "1 / -1";
 
     empty.innerHTML = `
-      <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">
+      <h3 style="margin:0 0 8px;font-size:24px;font-weight:800;">
         Chưa có deck nào
       </h3>
-      <p class="text-on-surface-variant mb-md">
+      <p style="margin:0 0 18px;color:var(--on-surface-variant);">
         Hãy tạo deck đầu tiên để bắt đầu học flashcard.
       </p>
       <button
         data-modal-open="createDeckModal"
-        class="bg-primary text-white font-bold px-4 py-2 rounded-full">
+        class="ff-btn ff-btn-primary">
         Create Deck
       </button>
     `;
@@ -689,14 +689,13 @@ function renderDecks(decks, options = {}) {
     });
 
     if (addSection) container.appendChild(addSection);
-
     return;
   }
 
   const colors = [
-    "primary",
-    "tertiary",
-    "secondary",
+    "#994700",
+    "#006397",
+    "#5f5e5e",
     "#E91E63",
     "#9C27B0",
     "#4CAF50",
@@ -704,74 +703,73 @@ function renderDecks(decks, options = {}) {
 
   decks.forEach((deck, i) => {
     const color = deck.color || colors[i % colors.length];
-    const colorClass = color.startsWith("#") ? "" : `bg-${color}`;
-    const colorStyle = color.startsWith("#") ? `style="background-color:${color}"` : "";
 
-    const card = document.createElement("div");
-
-    card.className =
-      "card-lift relative group bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)]";
+    const card = document.createElement("article");
+    card.className = "ff-card ff-card-lift ff-deck-card";
+    card.style.setProperty("--deck-color", color);
 
     card.innerHTML = `
-      <div class="absolute top-0 left-0 w-1.5 h-full rounded-l-xl ${colorClass}" ${colorStyle}></div>
-
-      <div class="flex justify-between items-start mb-md">
-        <div class="p-2 rounded-lg" style="background-color:${safeText(color)}20; color:${safeText(color)}">
-          <span class="material-symbols-outlined">${safeText(deck.icon || "menu_book")}</span>
+      <div class="ff-deck-head">
+        <div class="ff-deck-icon">
+          <span class="material-symbols-outlined">
+            ${safeText(deck.icon || "menu_book")}
+          </span>
         </div>
 
-        <div class="flex gap-xs">
+        <div class="ff-deck-actions">
           <button
+            type="button"
             data-edit-deck="${deck.id}"
-            class="p-1.5 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">
-            <span class="material-symbols-outlined text-[20px]">edit</span>
+            title="Edit deck">
+            <span class="material-symbols-outlined">edit</span>
           </button>
 
           <button
+            type="button"
+            class="danger"
             data-delete-deck="${deck.id}"
             data-deck-name="${safeText(deck.name)}"
             data-card-count="${deck.card_count || 0}"
-            class="p-1.5 text-error hover:bg-error-container rounded-full transition-colors">
-            <span class="material-symbols-outlined text-[20px]">delete</span>
+            title="Delete deck">
+            <span class="material-symbols-outlined">delete</span>
           </button>
         </div>
       </div>
 
-      <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">
+      <h3 class="ff-deck-title">
         ${safeText(deck.name)}
       </h3>
 
-      <p class="text-on-surface-variant mb-md min-h-[48px]">
+      <p class="ff-deck-desc">
         ${safeText(deck.description || "")}
       </p>
 
-      <div class="flex items-center gap-base text-label-lg text-on-surface-variant mb-lg">
-        <span class="flex items-center gap-xs">
-          <span class="material-symbols-outlined text-[18px]">folder</span>
+      <div class="ff-deck-meta">
+        <span>
+          <span class="material-symbols-outlined">folder</span>
           ${deck.folder_count || 0} Folders
         </span>
 
-        <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
-
-        <span class="flex items-center gap-xs">
-          <span class="material-symbols-outlined text-[18px]">style</span>
+        <span>
+          <span class="material-symbols-outlined">style</span>
           ${deck.card_count || 0} Cards
         </span>
       </div>
 
-      <div class="flex items-center justify-between mt-auto pt-md border-t border-outline-variant/30">
-        <span class="text-label-sm text-on-surface-variant">
+      <div class="ff-deck-footer">
+        <small>
           ${
             deck.last_studied_at
               ? "Last studied " + timeAgo(deck.last_studied_at)
               : "Not studied yet"
           }
-        </span>
+        </small>
 
         <button
+          type="button"
           data-open-deck="${deck.id}"
-          class="bg-surface-variant hover:bg-primary hover:text-white font-bold px-4 py-2 rounded-full transition-all text-label-lg"
-          style="color:${safeText(color)}">
+          class="ff-btn ff-btn-soft"
+          style="color:${safeText(color)};">
           Open Deck
         </button>
       </div>
@@ -781,27 +779,29 @@ function renderDecks(decks, options = {}) {
   });
 
   if (mode === "dashboard" && totalDecks > decks.length) {
-    const viewAll = document.createElement("div");
-
-    viewAll.className =
-      "bg-surface-container-lowest border border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center text-center";
+    const viewAll = document.createElement("article");
+    viewAll.className = "ff-card ff-card-lift";
+    viewAll.style.display = "flex";
+    viewAll.style.flexDirection = "column";
+    viewAll.style.alignItems = "center";
+    viewAll.style.justifyContent = "center";
+    viewAll.style.textAlign = "center";
+    viewAll.style.minHeight = "244px";
 
     viewAll.innerHTML = `
-      <span class="material-symbols-outlined text-primary text-4xl mb-sm">
+      <span class="material-symbols-outlined" style="font-size:46px;color:var(--primary);margin-bottom:10px;">
         dashboard
       </span>
 
-      <h3 class="font-bold text-headline-md mb-xs">
+      <h3 style="margin:0 0 8px;font-size:24px;font-weight:800;">
         View all decks
       </h3>
 
-      <p class="text-on-surface-variant mb-md">
+      <p style="margin:0 0 18px;color:var(--on-surface-variant);">
         You have ${totalDecks} decks in total.
       </p>
 
-      <a
-        href="decks.html"
-        class="bg-primary text-white font-bold px-4 py-2 rounded-full">
+      <a href="decks.html" class="ff-btn ff-btn-primary">
         Open Decks
       </a>
     `;
@@ -1054,16 +1054,16 @@ function renderFoldersAndSets(deck, folders, sets) {
 
   if (!folders.length) {
     container.innerHTML = `
-      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
-        <h3 class="font-bold text-headline-md mb-sm">
+      <div class="ff-card">
+        <h3 style="margin:0 0 8px;font-size:24px;font-weight:800;">
           Deck này chưa có folder
         </h3>
-        <p class="text-on-surface-variant mb-md">
+        <p style="margin:0 0 18px;color:var(--on-surface-variant);">
           Tạo folder trước, sau đó tạo set trong folder.
         </p>
         <button
           data-modal-open="createFolderModal"
-          class="bg-primary text-white px-md py-sm rounded-full font-bold">
+          class="ff-btn ff-btn-primary">
           Create Folder
         </button>
       </div>
@@ -1076,81 +1076,102 @@ function renderFoldersAndSets(deck, folders, sets) {
     return;
   }
 
-  folders.forEach((folder) => {
+  folders.forEach((folder, folderIndex) => {
     const folderSets = sets.filter((set) => set.folder_id === folder.id);
 
     const section = document.createElement("section");
+    section.className = "ff-card ff-folder-card";
 
-    section.className =
-      "bg-surface-container-lowest border border-outline-variant rounded-xl p-lg mb-lg shadow-[0px_4px_20px_rgba(0,0,0,0.05)]";
+    const isFirst = folderIndex === 0;
 
     section.innerHTML = `
-      <div class="flex items-start justify-between gap-md mb-md">
+      <button
+        type="button"
+        class="ff-folder-header"
+        data-toggle-folder="${folder.id}">
         <div>
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">
-              ${safeText(folder.icon || "folder")}
-            </span>
-            <h3 class="font-bold text-headline-md">
-              ${safeText(folder.name)}
-            </h3>
+          <div class="ff-folder-title-wrap">
+            <span class="material-symbols-outlined">folder</span>
+            <div>
+              <h3 class="ff-folder-title">
+                ${safeText(folder.name)}
+              </h3>
+              <p class="ff-folder-sub">
+                ${safeText(folder.description || "")}
+              </p>
+            </div>
           </div>
-
-          <p class="text-on-surface-variant">
-            ${safeText(folder.description || "")}
-          </p>
-
-          <p class="text-label-sm text-on-surface-variant mt-xs">
-            ${folder.set_count || 0} sets • ${folder.card_count || 0} cards
-          </p>
         </div>
-      </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-md">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="color:var(--on-surface-variant);font-weight:800;">
+            ${folder.set_count || 0} sets · ${folder.card_count || 0} cards
+          </span>
+          <span class="material-symbols-outlined" data-folder-chevron="${folder.id}">
+            ${isFirst ? "expand_less" : "expand_more"}
+          </span>
+        </div>
+      </button>
+
+      <div
+        class="ff-folder-body ${isFirst ? "" : "is-collapsed"}"
+        data-folder-body="${folder.id}">
         ${
           folderSets.length
-            ? folderSets
-                .map(
-                  (set) => `
-                    <article class="border border-outline-variant rounded-xl p-md bg-surface hover:bg-surface-container-low transition-colors">
-                      <div class="flex items-center gap-sm mb-sm">
-                        <span class="material-symbols-outlined text-primary">
-                          ${safeText(set.icon || "style")}
-                        </span>
-
-                        <h4 class="font-bold">
+            ? `
+              <div class="ff-set-grid">
+                ${folderSets
+                  .map(
+                    (set) => `
+                      <article
+                        class="ff-set-card"
+                        data-open-set="${set.id}"
+                        data-folder-id="${folder.id}">
+                        <h4 class="ff-set-title">
+                          <span class="material-symbols-outlined">
+                            ${safeText(set.icon || "style")}
+                          </span>
                           ${safeText(set.name)}
                         </h4>
-                      </div>
 
-                      <p class="text-on-surface-variant text-label-lg mb-md">
-                        ${safeText(set.description || "")}
-                      </p>
+                        <p class="ff-set-desc">
+                          ${safeText(set.description || "")}
+                        </p>
 
-                      <p class="text-label-sm text-on-surface-variant mb-md">
-                        ${set.card_count || 0} cards •
-                        ${Math.round(Number(set.mastery_percentage || 0))}% mastered
-                      </p>
+                        <p style="margin:0 0 14px;color:var(--on-surface-variant);font-weight:700;">
+                          ${set.card_count || 0} cards ·
+                          ${Math.round(Number(set.mastery_percentage || 0))}% mastered
+                        </p>
 
-                      <div class="flex flex-wrap gap-sm">
-                        <button
-                          data-open-cards="${set.id}"
-                          data-folder-id="${folder.id}"
-                          class="px-md py-sm rounded-full bg-surface-container text-primary font-bold">
-                          Cards
-                        </button>
+                        <div class="ff-set-actions">
+                          <button
+                            type="button"
+                            class="ff-btn ff-btn-soft"
+                            data-open-cards="${set.id}"
+                            data-folder-id="${folder.id}">
+                            Cards
+                          </button>
 
-                        <button
-                          data-study-set="${set.id}"
-                          class="px-md py-sm rounded-full bg-primary text-white font-bold">
-                          Study
-                        </button>
-                      </div>
-                    </article>
-                  `
-                )
-                .join("")
-            : `<p class="text-on-surface-variant col-span-full">Folder này chưa có set.</p>`
+                          <button
+                            type="button"
+                            class="ff-btn ff-btn-primary"
+                            data-study-set="${set.id}">
+                            Study
+                          </button>
+                        </div>
+                      </article>
+                    `
+                  )
+                  .join("")}
+              </div>
+            `
+            : `
+              <div class="ff-card" style="box-shadow:none;">
+                <p style="margin:0;color:var(--on-surface-variant);">
+                  Folder này chưa có set. Bấm Create Set để thêm.
+                </p>
+              </div>
+            `
         }
       </div>
     `;
@@ -1158,8 +1179,39 @@ function renderFoldersAndSets(deck, folders, sets) {
     container.appendChild(section);
   });
 
-  document.querySelectorAll("[data-open-cards]").forEach((btn) => {
+  document.querySelectorAll("[data-toggle-folder]").forEach((btn) => {
     btn.addEventListener("click", () => {
+      const folderId = btn.dataset.toggleFolder;
+      const body = document.querySelector(`[data-folder-body="${folderId}"]`);
+      const chevron = document.querySelector(`[data-folder-chevron="${folderId}"]`);
+
+      if (!body) return;
+
+      body.classList.toggle("is-collapsed");
+
+      if (chevron) {
+        chevron.textContent = body.classList.contains("is-collapsed")
+          ? "expand_more"
+          : "expand_less";
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-open-set]").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("button")) return;
+
+      const setId = card.dataset.openSet;
+      const folderId = card.dataset.folderId;
+
+      window.location.href = `cards.html?deckId=${deck.id}&folderId=${folderId}&setId=${setId}`;
+    });
+  });
+
+  document.querySelectorAll("[data-open-cards]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
       const setId = btn.dataset.openCards;
       const folderId = btn.dataset.folderId;
 
@@ -1168,7 +1220,9 @@ function renderFoldersAndSets(deck, folders, sets) {
   });
 
   document.querySelectorAll("[data-study-set]").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
       window.location.href = `study-session.html?deckId=${deck.id}&setId=${btn.dataset.studySet}`;
     });
   });
@@ -1253,7 +1307,12 @@ async function loadCardsAndRender(setId) {
   renderCards(result.cards || []);
 }
 
+let isBulkEditMode = false;
+let currentRenderedCards = [];
+
 function renderCards(cards) {
+  currentRenderedCards = cards;
+
   const container =
     document.getElementById("cardsContainer") ||
     document.getElementById("cardsList") ||
@@ -1266,65 +1325,160 @@ function renderCards(cards) {
   const countEl = document.getElementById("cardsCount");
   if (countEl) countEl.textContent = cards.length;
 
+  const toolbar = document.createElement("div");
+  toolbar.className = "ff-bulk-bar";
+
+  toolbar.innerHTML = `
+    <div>
+      <strong>${cards.length} cards</strong>
+      <span style="color:var(--on-surface-variant);">
+        ${isBulkEditMode ? "· Editing this set" : "· View mode"}
+      </span>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button
+        type="button"
+        id="toggleBulkEditBtn"
+        class="ff-btn ${isBulkEditMode ? "ff-btn-soft" : "ff-btn-tonal"}">
+        ${isBulkEditMode ? "Cancel Edit" : "Edit Set"}
+      </button>
+
+      ${
+        isBulkEditMode
+          ? `
+            <button
+              type="button"
+              id="saveAllCardsBtn"
+              class="ff-btn ff-btn-primary">
+              Save All Cards
+            </button>
+          `
+          : ""
+      }
+    </div>
+  `;
+
+  container.appendChild(toolbar);
+
+  document.getElementById("toggleBulkEditBtn")?.addEventListener("click", () => {
+    isBulkEditMode = !isBulkEditMode;
+    renderCards(currentRenderedCards);
+  });
+
+  document.getElementById("saveAllCardsBtn")?.addEventListener("click", async () => {
+    await saveAllCardsInSet();
+  });
+
   if (!cards.length) {
-    container.innerHTML = `
-      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
-        <h3 class="font-bold text-headline-md mb-sm">
-          Set này chưa có flashcard
-        </h3>
-        <p class="text-on-surface-variant">
-          Hãy thêm card đầu tiên.
-        </p>
-      </div>
+    const empty = document.createElement("div");
+    empty.className = "ff-card";
+
+    empty.innerHTML = `
+      <h3 style="margin:0 0 8px;font-size:24px;font-weight:800;">
+        Set này chưa có flashcard
+      </h3>
+      <p style="margin:0;color:var(--on-surface-variant);">
+        Hãy thêm card đầu tiên.
+      </p>
     `;
 
+    container.appendChild(empty);
     return;
   }
 
   cards.forEach((card, index) => {
-    const el = document.createElement("div");
+    const row = document.createElement("article");
+    row.className = "ff-card-row";
+    row.dataset.cardId = card.id;
 
-    el.className =
-      "card-row-shadow card-row-focus bg-surface-container-lowest border border-outline-variant rounded-xl p-lg mb-md";
+    if (isBulkEditMode) {
+      row.innerHTML = `
+        <div class="ff-card-row-head">
+          <p class="ff-card-index">Card ${index + 1}</p>
 
-    el.innerHTML = `
-      <div class="flex justify-between gap-md">
-        <div class="flex-1">
-          <p class="text-label-sm text-on-surface-variant mb-xs">
-            Card ${index + 1}
-          </p>
+          <button
+            type="button"
+            class="ff-icon-btn"
+            data-delete-card="${card.id}"
+            title="Delete card">
+            <span class="material-symbols-outlined">delete</span>
+          </button>
+        </div>
 
-          <h3 class="font-bold mb-sm">
-            ${safeText(card.question)}
-          </h3>
+        <div class="ff-card-edit-grid">
+          <div class="ff-field" style="margin:0;">
+            <label>Question</label>
+            <textarea data-edit-question="${card.id}">${safeText(card.question)}</textarea>
+          </div>
 
-          <p class="text-on-surface-variant whitespace-pre-wrap">
-            ${safeText(card.answer)}
-          </p>
-
-          ${
-            card.image_url
-              ? `<img
-                  src="${safeText(card.image_url)}"
-                  alt="Card image"
-                  class="mt-md rounded-xl max-h-48 object-cover border border-outline-variant">`
-              : ""
-          }
-
-          <div class="mt-md text-label-sm text-on-surface-variant">
-            Difficulty ${card.difficulty_level || 1} •
-            ${card.status || "learning"} •
-            Reviewed ${card.review_count || 0} times
+          <div class="ff-field" style="margin:0;">
+            <label>Answer</label>
+            <textarea data-edit-answer="${card.id}">${safeText(card.answer)}</textarea>
           </div>
         </div>
 
-        <button class="text-error self-start" data-delete-card="${card.id}">
-          <span class="material-symbols-outlined">delete</span>
-        </button>
-      </div>
-    `;
+        <div class="ff-card-extra-grid">
+          <div class="ff-field" style="margin:0;">
+            <label>Image URL</label>
+            <input
+              data-edit-image="${card.id}"
+              type="url"
+              value="${safeText(card.image_url || "")}">
+          </div>
 
-    container.appendChild(el);
+          <div class="ff-field" style="margin:0;">
+            <label>Difficulty</label>
+            <select data-edit-difficulty="${card.id}">
+              ${[1, 2, 3, 4, 5]
+                .map(
+                  (n) =>
+                    `<option value="${n}" ${
+                      Number(card.difficulty_level || 1) === n ? "selected" : ""
+                    }>${n}</option>`
+                )
+                .join("")}
+            </select>
+          </div>
+        </div>
+      `;
+    } else {
+      row.innerHTML = `
+        <div class="ff-card-row-head">
+          <div>
+            <p class="ff-card-index">Card ${index + 1}</p>
+            <h3 class="ff-card-question">${safeText(card.question)}</h3>
+          </div>
+
+          <button
+            type="button"
+            class="ff-icon-btn"
+            data-delete-card="${card.id}"
+            title="Delete card">
+            <span class="material-symbols-outlined">delete</span>
+          </button>
+        </div>
+
+        <p class="ff-card-answer">${safeText(card.answer)}</p>
+
+        ${
+          card.image_url
+            ? `<img
+                src="${safeText(card.image_url)}"
+                alt="Card image"
+                style="margin-top:16px;max-height:220px;max-width:100%;border-radius:16px;border:1px solid var(--outline-variant);object-fit:cover;">`
+            : ""
+        }
+
+        <p style="margin:18px 0 0;color:var(--on-surface-variant);font-weight:700;">
+          Difficulty ${card.difficulty_level || 1} ·
+          ${card.status || "learning"} ·
+          Reviewed ${card.review_count || 0} times
+        </p>
+      `;
+    }
+
+    container.appendChild(row);
   });
 
   document.querySelectorAll("[data-delete-card]").forEach((btn) => {
@@ -1342,6 +1496,54 @@ function renderCards(cards) {
       }
     });
   });
+}
+
+async function saveAllCardsInSet() {
+  const cards = currentRenderedCards || [];
+
+  if (!cards.length) return;
+
+  try {
+    const btn = document.getElementById("saveAllCardsBtn");
+
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Saving...";
+    }
+
+    for (const card of cards) {
+      const question = document.querySelector(`[data-edit-question="${card.id}"]`)?.value?.trim();
+      const answer = document.querySelector(`[data-edit-answer="${card.id}"]`)?.value?.trim();
+      const imageUrl = document.querySelector(`[data-edit-image="${card.id}"]`)?.value?.trim();
+      const difficulty = Number(
+        document.querySelector(`[data-edit-difficulty="${card.id}"]`)?.value || 1
+      );
+
+      if (!question || !answer) {
+        throw new Error("Question và Answer không được để trống.");
+      }
+
+      await updateCard(card.id, {
+        question,
+        answer,
+        image_url: imageUrl || null,
+        difficulty_level: difficulty,
+      });
+    }
+
+    showToast("Đã lưu toàn bộ cards.", "success");
+
+    isBulkEditMode = false;
+    await loadCardsAndRender(getParam("setId"));
+  } catch (err) {
+    showToast(err.message, "error");
+
+    const btn = document.getElementById("saveAllCardsBtn");
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "Save All Cards";
+    }
+  }
 }
 
 // ============================================================
@@ -1440,34 +1642,71 @@ function renderCurrentStudyCard() {
     progressEl.textContent = `${currentCardIndex + 1}/${studyCards.length}`;
   }
 
-  const questionEl = document.getElementById("studyQuestion");
+  const studyArea = document.getElementById("studyArea");
 
-  if (questionEl) {
-    questionEl.textContent = card.question;
+  if (studyArea) {
+    studyArea.innerHTML = `
+      <div class="ff-study-card ${isAnswerShown ? "is-flipped" : ""}" id="studyFlipCard">
+        <div class="ff-study-inner">
+          <div class="ff-study-face ff-study-front">
+            <p class="ff-study-label">Question</p>
+
+            ${
+              card.image_url
+                ? `<img
+                    src="${safeText(card.image_url)}"
+                    alt="Study image"
+                    style="max-height:220px;max-width:100%;border-radius:18px;margin-bottom:24px;">`
+                : ""
+            }
+
+            <p class="ff-study-text">
+              ${safeText(card.question)}
+            </p>
+          </div>
+
+          <div class="ff-study-face ff-study-back">
+            <p class="ff-study-label">Answer</p>
+            <p class="ff-study-answer">
+              ${safeText(card.answer)}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ff-study-actions">
+        <button
+          id="showAnswerBtn"
+          class="ff-btn ff-btn-primary ${isAnswerShown ? "hidden" : ""}"
+          type="button">
+          Show Answer
+        </button>
+
+        <button
+          id="incorrectBtn"
+          class="ff-btn ff-btn-danger ${isAnswerShown ? "" : "hidden"}"
+          type="button">
+          Incorrect
+        </button>
+
+        <button
+          id="correctBtn"
+          class="ff-btn ff-btn-success ${isAnswerShown ? "" : "hidden"}"
+          type="button">
+          Correct
+        </button>
+
+        <button
+          id="finishStudyBtn"
+          class="ff-btn ff-btn-soft"
+          type="button">
+          Finish
+        </button>
+      </div>
+    `;
+
+    bindStudyButtons();
   }
-
-  const answerEl = document.getElementById("studyAnswer");
-
-  if (answerEl) {
-    answerEl.textContent = isAnswerShown
-      ? card.answer
-      : "Nhấn Show Answer để xem đáp án";
-  }
-
-  const imageEl = document.getElementById("studyImage");
-
-  if (imageEl) {
-    if (card.image_url) {
-      imageEl.src = card.image_url;
-      imageEl.classList.remove("hidden");
-    } else {
-      imageEl.classList.add("hidden");
-    }
-  }
-
-  document.getElementById("correctBtn")?.classList.toggle("hidden", !isAnswerShown);
-  document.getElementById("incorrectBtn")?.classList.toggle("hidden", !isAnswerShown);
-  document.getElementById("showAnswerBtn")?.classList.toggle("hidden", isAnswerShown);
 }
 
 async function reviewCurrentCard(isCorrect) {
